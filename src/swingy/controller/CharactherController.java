@@ -7,6 +7,7 @@ import swingy.util.CharactherFactory;
  * Created by skushnir on 12.09.2018.
  */
 public class CharactherController {
+    public static Hero hero;
 
     static void fight(Hero hero, Characther enemy) {
 

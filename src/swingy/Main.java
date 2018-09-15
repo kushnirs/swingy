@@ -1,13 +1,31 @@
 package swingy;
 
-import swingy.view.StartGame;
+import swingy.view.console.ConsoleStartGame;
+import swingy.view.gui.GuiStartGame;
+import swingy.model.characthers.*;
 
 /**
  * Created by skushnir on 12.09.2018.
  */
 public class Main {
+
     public static void main(String[] args) {
-        StartGame app = new StartGame();
-        app.setVisible(true);
+
+//        GuiStartGame app = new GuiStartGame();
+//        app.setVisible(true);
+
+        try {
+            if (args.length != 1)
+                throw new Exception("Wrong amount of argument(must be 1)");
+            else if (args[0].compareTo("gui") != 0 && args[0].compareTo("console") != 0)
+                throw new Exception("Wrong argument");
+            else if (args[0].compareTo("gui") == 0)
+                new GuiStartGame();
+            else
+                new ConsoleStartGame();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 }

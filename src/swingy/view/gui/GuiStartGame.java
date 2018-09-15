@@ -1,4 +1,4 @@
-package swingy.view;
+package swingy.view.gui;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -6,7 +6,7 @@ import javax.swing.*;
 /**
  * Created by skushnir on 12.09.2018.
  */
-public class StartGame {
+public class GuiStartGame {
 //    private JButton button = new JButton("Press");
 //    private JTextField input = new JTextField("", 5);
 //    private JLabel label = new JLabel("Input:");
@@ -14,7 +14,7 @@ public class StartGame {
 //    private JRadioButton radio2 = new JRadioButton("Select that");
 //    private JCheckBox check = new JCheckBox("Check", false);
 //
-//    public StartGame() {
+//    public GuiStartGame() {
 //        super("Swingy");
 //        this.setBounds(100,100,250,100);
 //        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -100,7 +100,7 @@ public class StartGame {
 //    private JButton buttonExit = new JButton("Exit");
 //    private JLabel logo = new JLabel(new ImageIcon("/Users/sergee/projects/swingy/src/resources/images.png"), JLabel.CENTER);
 //
-//    public StartGame() {
+//    public GuiStartGame() {
 //        super("Swingy");
 //        this.setBounds(100,100,300,550);
 //        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

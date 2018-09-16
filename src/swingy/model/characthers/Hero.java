@@ -15,8 +15,8 @@ public class Hero extends Characther {
     private Helm helm;
     private Weapon weapon;
 
-    public Hero(Characther unit, Armor armor, Helm helm, Weapon weapon) {
-        super(unit.getName(), unit.getLevel(), unit.getAttack(), unit.getDefense(), 100);
+    public Hero(String name, Characther unit, Armor armor, Helm helm, Weapon weapon) {
+        super(name, unit.getLevel(), unit.getAttack(), unit.getDefense(), 100);
         this.level = 1;
         this.experience = 0;
         this.armor = armor;

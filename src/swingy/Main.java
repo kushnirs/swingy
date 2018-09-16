@@ -8,6 +8,9 @@ import swingy.model.characthers.*;
  * Created by skushnir on 12.09.2018.
  */
 public class Main {
+    public static Hero hero;
+    public static int map_size;
+    public static int[] map;
 
     public static void main(String[] args) {
 
@@ -22,7 +25,7 @@ public class Main {
             else if (args[0].compareTo("gui") == 0)
                 new GuiStartGame();
             else
-                new ConsoleStartGame();
+                ConsoleStartGame.Game();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

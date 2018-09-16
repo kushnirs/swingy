@@ -1,8 +1,8 @@
-package swingy.model.characthers;
+package main.model.characthers;
 
-import swingy.model.artifacts.Armor;
-import swingy.model.artifacts.Helm;
-import swingy.model.artifacts.Weapon;
+import main.model.artifacts.Armor;
+import main.model.artifacts.Helm;
+import main.model.artifacts.Weapon;
 
 /**
  * Created by skushnir on 12.09.2018.
@@ -44,6 +44,10 @@ public class Hero extends Characther {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public void setlevel(int level) {
+        this.level = level;
     }
 
     public void  checkExperience() {

@@ -1,8 +1,5 @@
-package swingy.view.gui;
+package main.view.gui;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
 /**
  * Created by skushnir on 12.09.2018.
  */
@@ -57,7 +54,7 @@ public class GuiStartGame {
 
 
 //        public static void main(String[] args) {
-//            ImagePanel panel = new ImagePanel(new ImageIcon("/Users/sergee/projects/swingy/src/resources/logo.jpg").getImage().getScaledInstance(100, 100,Image.SCALE_DEFAULT));
+//            ImagePanel panel = new ImagePanel(new ImageIcon("/Users/sergee/projects/main/src/resources/logo.jpg").getImage().getScaledInstance(100, 100,Image.SCALE_DEFAULT));
 //
 //            JFrame frame = new JFrame();
 //            frame.getContentPane().add(panel);
@@ -98,7 +95,7 @@ public class GuiStartGame {
 
 //    private JButton buttonNew = new JButton("New Game");
 //    private JButton buttonExit = new JButton("Exit");
-//    private JLabel logo = new JLabel(new ImageIcon("/Users/sergee/projects/swingy/src/resources/images.png"), JLabel.CENTER);
+//    private JLabel logo = new JLabel(new ImageIcon("/Users/sergee/projects/main/src/resources/images.png"), JLabel.CENTER);
 //
 //    public GuiStartGame() {
 //        super("Swingy");

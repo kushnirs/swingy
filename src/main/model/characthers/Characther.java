@@ -1,4 +1,4 @@
-package swingy.model.characthers;
+package main.model.characthers;
 
 /**
  * Created by skushnir on 12.09.2018.

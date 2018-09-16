@@ -1,7 +1,6 @@
-package swingy.controller;
+package main.controller;
 
-import swingy.model.characthers.*;
-import swingy.Main;
+import main.Main;
 
 /**
  * Created by skushnir on 12.09.2018.

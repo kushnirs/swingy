@@ -1,6 +1,6 @@
-package swingy.util;
+package main.util;
 
-import swingy.model.characthers.*;
+import main.model.characthers.*;
 
 /**
  * Created by skushnir on 12.09.2018.

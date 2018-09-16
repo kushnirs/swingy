@@ -1,8 +1,8 @@
-package swingy;
+package main;
 
-import swingy.view.console.ConsoleStartGame;
-import swingy.view.gui.GuiStartGame;
-import swingy.model.characthers.*;
+import main.view.console.ConsoleStartGame;
+import main.view.gui.GuiStartGame;
+import main.model.characthers.*;
 
 /**
  * Created by skushnir on 12.09.2018.

@@ -1,8 +1,8 @@
-package swingy.controller;
+package main.controller;
 
-import swingy.Main;
-import swingy.model.characthers.*;
-import swingy.util.CharactherFactory;
+import main.Main;
+import main.model.characthers.*;
+import main.util.CharactherFactory;
 
 /**
  * Created by skushnir on 12.09.2018.

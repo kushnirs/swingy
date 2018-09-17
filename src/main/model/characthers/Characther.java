@@ -41,7 +41,7 @@ public class Characther {
     }
 
     //Setter
-    public void setHealth(int health) {
+    public void setHp(int health) {
         this.hp = health;
     }
 }

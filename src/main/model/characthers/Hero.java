@@ -37,6 +37,18 @@ public class Hero extends Characther {
         return y;
     }
 
+    public Armor getArmor() {
+        return armor;
+    }
+
+    public Helm getHelm() {
+        return helm;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
     //Setter
     public void setX(int x) {
         this.x = x;
@@ -49,6 +61,19 @@ public class Hero extends Characther {
     public void setlevel(int level) {
         this.level = level;
     }
+
+    public void setArmor (Armor armor) {
+        this.armor = armor;
+    }
+
+    public void setHelm (Helm helm) {
+        this.helm = helm;
+    }
+
+    public void setWeapon (Weapon weapon) {
+        this.weapon = weapon;
+    }
+
 
     public void  checkExperience() {
         int nextlevel = this.level * 1000 + (this.level - 1) * (this.level - 1) * 450;

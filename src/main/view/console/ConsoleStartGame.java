@@ -49,17 +49,7 @@ public class ConsoleStartGame {
         System.out.println("/2.Create new Hero                                 /");
         System.out.println("/--------------------------------------------------/\u001B[0m");
 
-
-        Scanner in = new Scanner(System.in);
-        int input = 0;
-        do {
-            try {
-                System.out.print("Command: ");
-                input = Integer.parseInt(in.nextLine());
-            } catch (Exception e) {
-                System.out.println("\u001B[31mMust be 1 or 2\u001B[0m");
-            }
-        } while (input != 1 && input != 2);
+        int input = readNbr(1, 2, "Command: ",  "\u001B[31mMust be 1 or 2\u001B[0m");
 
         if (input == 1)
             selectHero();
@@ -76,15 +66,9 @@ public class ConsoleStartGame {
     }
 
     static private void createHero() {
-
-        Scanner in = new Scanner(System.in);
-        String name;
         System.out.println("\u001B[36m/-------------------CreateHero---------------------/\u001B[0m");
 
-        do {
-                System.out.print("Add name: ");
-                name = in.nextLine().replaceAll("(^\\s+|\\s+$)", "");
-        } while (name.length() == 0);
+        String name = readStr("Add name: ");
 
         System.out.println("\u001B[36m/-------------------CreateHero---------------------/");
         System.out.println("/Hero type:                                        /");
@@ -95,45 +79,22 @@ public class ConsoleStartGame {
         System.out.println("/4.BLACKMAGE(20, 10, 100)                          /");
         System.out.println("/--------------------------------------------------/\u001B[0m");
 
-        int type = 0;
-        do {
-            try {
-                System.out.print("Choose type of hero and add appropriate number: ");
-                type = Integer.parseInt(in.nextLine());
-            } catch (Exception e) {
-                System.out.println("\u001B[31mMust be from 1 to 4\u001B[0m");
-            }
-        } while (type != 1 && type != 2 && type != 3 && type != 4);
+        int type = readNbr(1,4,"Choose type of hero and add appropriate number: ","\u001B[31mMust be from 1 to 4\u001B[0m");
 
-        int armor = -1;
-        do {
-            try {
-                System.out.print("Hero have armor?(1 - yes / 0 - no): ");
-                armor = Integer.parseInt(in.nextLine());
-            } catch (Exception e) {
-                System.out.println("\u001B[31mMust be 1 or 2\u001B[0m");
-            }
-        } while (armor != 1 && armor != 0);
+        int armor = readNbr(0, 1, "Hero have armor?(1 - yes / 0 - no): ", "\u001B[31mMust be 1 or 2\u001B[0m");
+        String armor_name = "";
+        if (armor == 1)
+            armor_name = readStr("Add armor name: ");
 
-        int helm = -1;
-        do {
-            try {
-                System.out.print("Hero have helm?(1 - yes / 0 - no): ");
-                helm = Integer.parseInt(in.nextLine());
-            } catch (Exception e) {
-                System.out.println("\u001B[31mMust be 1 or 2\u001B[0m");
-            }
-        } while (helm != 1 && helm != 0);
+        int helm = readNbr(0, 1, "Hero have helm?(1 - yes / 0 - no): ", "\u001B[31mMust be 1 or 2\u001B[0m");
+        String helm_name = "";
+        if (helm == 1)
+            helm_name = readStr("Add helm name: ");
 
-        int weapon = -1;
-        do {
-            try {
-                System.out.print("Hero have weapon?(1 - yes / 0 - no): ");
-                weapon = Integer.parseInt(in.nextLine());
-            } catch (Exception e) {
-                System.out.println("\u001B[31mMust be 1 or 2\u001B[0m");
-            }
-        } while (weapon != 1 && weapon != 0);
+        int weapon = readNbr(0, 1, "Hero have weapon?(1 - yes / 0 - no): ", "\u001B[31mMust be 1 or 2\u001B[0m");
+        String weapon_name = "";
+        if (weapon == 1)
+            weapon_name = readStr("Add weapon name: ");
 
         Characther tmp = null;
         switch (type) {
@@ -151,7 +112,7 @@ public class ConsoleStartGame {
                 break;
         }
         Main.hero = new Hero(name, tmp,
-                armor == 1 ? new Armor() : null, helm == 1 ? new Helm() : null, weapon == 1 ? new Weapon() : null);
+                armor == 1 ? new Armor(armor_name) : null, helm == 1 ? new Helm(helm_name) : null, weapon == 1 ? new Weapon(weapon_name) : null);
     }
 
 
@@ -202,17 +163,9 @@ public class ConsoleStartGame {
             System.out.println("/-----------------------------------------------------/\u001B[0m");
 
 
-            Scanner in = new Scanner(System.in);
-            int way = 0;
             int[][] move = {{0,-1},{-1,0},{1,0},{0,1}};
-            do {
-                try {
-                    System.out.print("Add way: ");
-                    way = Integer.parseInt(in.nextLine());
-                } catch (Exception e) {
-                    System.out.println("\u001B[31mMust be from 1 to 4\u001B[0m");
-                }
-            } while (way != 1 && way != 2 && way != 3 && way != 4);
+            int way = readNbr(1, 4, "Add way: ", "\u001B[31mMust be from 1 to 4\u001B[0m");
+
             GamePlayController.move(move[way - 1][0],move[way - 1][1]);
 
             int col = GamePlayController.checkCollision();
@@ -223,15 +176,7 @@ public class ConsoleStartGame {
                 System.out.println("/                       1      0                      /");
                 System.out.println("/-----------------------------------------------------/\u001B[0m");
 
-                int input = -1;
-                do {
-                    try {
-                        System.out.print("Your choose: ");
-                        input = Integer.parseInt(in.nextLine());
-                    } catch (Exception e) {
-                        System.out.println("\u001B[31mMust be 1 or 2\u001B[0m");
-                    }
-                } while (input != 0 && input != 1) ;
+                int input = readNbr(0, 1, "Your choose: ", "\u001B[31mMust be 1 or 2\u001B[0m");
 
                 int res;
                 if (input == 1)
@@ -246,16 +191,7 @@ public class ConsoleStartGame {
                         System.out.println("/         exit           retry        change hero     /");
                         System.out.println("/           0              1              2           /");
                         System.out.println("/-----------------------------------------------------/\u001B[0m");
-                        input = -1;
-                        do {
-                            try {
-                                System.out.print("Your choose: ");
-                                input = Integer.parseInt(in.nextLine());
-                            } catch (Exception e) {
-                                System.out.println("\u001B[31mMust be from 0 to 2\u001B[0m");
-                            }
-                        } while (input != 0 && input != 1 && input != 2);
-                        return input;
+                        return readNbr(0, 2, "Your choose: ", "\u001B[31mMust be from 0 to 2\u001B[0m");
                     case 2:
                         System.out.println("\u001B[36m//---------------------Run or Fight--------------------/");
                         System.out.println("/This time you're lucky to run away                   /");
@@ -271,6 +207,30 @@ public class ConsoleStartGame {
         System.out.println("/                     NEXT LEVEL " + Main.hero.getLevel() + 1 + "                    /");
         System.out.println("/-----------------------------------------------------/\u001B[0m\n");
         return 3;
+    }
+
+    static private String readStr(String command) {
+        Scanner in = new Scanner(System.in);
+        String name;
+        do {
+            System.out.print(command);
+            name = in.nextLine().replaceAll("(^\\s+|\\s+$)", "");
+        } while (name.length() == 0);
+        return name;
+    }
+
+   static private int readNbr(int min, int max, String command, String error) {
+        Scanner in = new Scanner(System.in);
+        int input = -1;
+        do {
+            try {
+                System.out.print(command);
+                input = Integer.parseInt(in.nextLine());
+            } catch (Exception e) {
+                System.out.println(error);
+            }
+        } while (input < min && input > max);
+        return input;
     }
 
 }

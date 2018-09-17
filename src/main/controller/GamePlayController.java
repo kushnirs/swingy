@@ -15,7 +15,7 @@ public class GamePlayController {
     public static void addEnemytoMap(int level) {
         int enemyAmount = (int)(Main.map.length * (level * 0.1 + 0.1));
         for (int i = 0; i < enemyAmount; i++)
-            Main.map[(int)(Math.random() * enemyAmount)] = 1;
+            Main.map[(int)(Math.random() * Main.map.length)] = 1;
     }
 
     public static void move(int x, int y) {

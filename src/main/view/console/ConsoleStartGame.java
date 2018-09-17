@@ -73,25 +73,25 @@ public class ConsoleStartGame {
         System.out.println("\u001B[36m/-------------------CreateHero---------------------/");
         System.out.println("/Hero type:                                        /");
         System.out.println("/TYPE(attack,defense,hp)                           /");
-        System.out.println("/1.ELF(30, 20, 135)                                /");
-        System.out.println("/2.ORC(25, 15, 130)                                /");
-        System.out.println("/3.VILLAIN(5, 10, 100)                             /");
-        System.out.println("/4.BLACKMAGE(20, 10, 100)                          /");
+        System.out.println("/1.ELF(30, 10, 135)                                /");
+        System.out.println("/2.ORC(25, 5, 130)                                /");
+        System.out.println("/3.VILLAIN(5, 6, 100)                             /");
+        System.out.println("/4.BLACKMAGE(20, 8, 100)                          /");
         System.out.println("/--------------------------------------------------/\u001B[0m");
 
         int type = readNbr(1,4,"Choose type of hero and add appropriate number: ","\u001B[31mMust be from 1 to 4\u001B[0m");
 
-        int armor = readNbr(0, 1, "Hero have armor?(1 - yes / 0 - no): ", "\u001B[31mMust be 1 or 2\u001B[0m");
+        int armor = readNbr(0, 1, "Hero have armor?(1 - yes / 0 - no): ", "\u001B[31mMust be 0 or 1\u001B[0m");
         String armor_name = "";
         if (armor == 1)
             armor_name = readStr("Add armor name: ");
 
-        int helm = readNbr(0, 1, "Hero have helm?(1 - yes / 0 - no): ", "\u001B[31mMust be 1 or 2\u001B[0m");
+        int helm = readNbr(0, 1, "Hero have helm?(1 - yes / 0 - no): ", "\u001B[31mMust be 0 or 1\u001B[0m");
         String helm_name = "";
         if (helm == 1)
             helm_name = readStr("Add helm name: ");
 
-        int weapon = readNbr(0, 1, "Hero have weapon?(1 - yes / 0 - no): ", "\u001B[31mMust be 1 or 2\u001B[0m");
+        int weapon = readNbr(0, 1, "Hero have weapon?(1 - yes / 0 - no): ", "\u001B[31mMust be 0 or 1\u001B[0m");
         String weapon_name = "";
         if (weapon == 1)
             weapon_name = readStr("Add weapon name: ");
@@ -116,6 +116,87 @@ public class ConsoleStartGame {
     }
 
 
+    static private void initMission() {
+        GamePlayController.initMap();
+        GamePlayController.addEnemytoMap(Main.hero.getLevel());
+        CharactherController.initHeroPosition(Main.hero);
+    }
+
+    static private int startSimulation() {
+        while(1 != 0)
+        {
+            StringBuffer log = new StringBuffer("");
+
+            System.out.println("\u001B[36m/----------------------Simulation---------------------/\u001B[0m");
+            System.out.println("\u001B[31mHero: " + Main.hero.getName());
+            System.out.println("Level: " + Main.hero.getLevel());
+            System.out.println("Experience: " + Main.hero.getExperience() + "\u001B[0m");
+
+            drawMap();
+
+            System.out.println("\u001B[36m/-------------------------Way-------------------------/");
+            System.out.println("/                       1.North                       /");
+            System.out.println("/               2.West           3.East               /");
+            System.out.println("/                       4.South                       /");
+            System.out.println("/-----------------------------------------------------/\u001B[0m");
+
+
+            int[][] move = {{0,-1},{-1,0},{1,0},{0,1}};
+            int way = readNbr(1, 4, "Add way: ", "\u001B[31mMust be from 1 to 4\u001B[0m");
+
+            if (GamePlayController.move(move[way - 1][0],move[way - 1][1]) == 1)
+                break;
+
+            int col = GamePlayController.checkCollision();
+            if (col == 1) {
+                System.out.println("\u001B[36m/---------------------Run or Fight--------------------/");
+                System.out.println("/                  You met the enemy                  /");
+                System.out.println("/                     Run or Fight?                   /");
+                System.out.println("/                       1      0                      /");
+                System.out.println("/-----------------------------------------------------/\u001B[0m");
+
+                int input = readNbr(0, 1, "Your choose: ", "\u001B[31mMust be 1 or 2\u001B[0m");
+
+                int res;
+                if (input == 1)
+                    res = CharactherController.run(Main.hero, CharactherController.newEnemy(),log);
+                else
+                    res = CharactherController.fight(Main.hero, CharactherController.newEnemy(),log);
+
+                String[] fight = log.toString().split("\n");
+                for (String str : fight)
+                {
+                    try {
+                        System.out.println(str);
+                        Thread.sleep(500);
+                    } catch (InterruptedException qq) {
+                        qq.printStackTrace();
+                    }
+                }
+                switch (res) {
+                    case 0:
+                        System.out.println("\u001B[36m/---------------------Run or Fight--------------------/");
+                        System.out.println("/                       YOU DIED                      /");
+                        System.out.println("/         exit           retry        change hero     /");
+                        System.out.println("/           0              1              2           /");
+                        System.out.println("/-----------------------------------------------------/\u001B[0m");
+                        return readNbr(0, 2, "Your choose: ", "\u001B[31mMust be from 0 to 2\u001B[0m");
+                    case 2:
+                        System.out.println("\u001B[36m/---------------------Run or Fight--------------------/");
+                        System.out.println("/This time you're lucky to run away                   /");
+                        System.out.println("/-----------------------------------------------------/\u001B[0m\n");
+                        GamePlayController.move(-move[way - 1][0], -move[way - 1][1]);
+                }
+            }
+        }
+
+        System.out.println("\u001B[36m/----------------------Simulation---------------------/");
+        System.out.println("/                       YOU WIN!                      /");
+        System.out.println("/                     NEXT LEVEL " + (Main.hero.getLevel() + 1) + "                    /");
+        System.out.println("/-----------------------------------------------------/\u001B[0m\n");
+        return 3;
+    }
+
     static private void drawMap() {
         int size = Main.map_size;
         int[] map = Main.map;
@@ -139,76 +220,6 @@ public class ConsoleStartGame {
         System.out.print("\n\n");
     }
 
-    static private void initMission() {
-        GamePlayController.initMap();
-        GamePlayController.addEnemytoMap(Main.hero.getLevel());
-        CharactherController.initHeroPosition(Main.hero);
-    }
-
-    static private int startSimulation() {
-        int hero_pos = Main.hero.getX()+ Main.hero.getY() * Main.map_size;
-        while(hero_pos >= 0 && hero_pos < Main.map_size * Main.map_size &&
-                hero_pos > Main.hero.getY() * Main.map_size && hero_pos < (Main.hero.getY() + 1) * Main.map_size )
-        {
-            System.out.println("\u001B[36m/----------------------Simulation---------------------/\u001B[0m");
-            System.out.println("Hero: " + Main.hero.getName());
-            System.out.println("Level: " + Main.hero.getLevel());
-            System.out.println("Experience: " + Main.hero.getExperience());
-            drawMap();
-
-            System.out.println("\u001B[36m/-------------------------Way-------------------------/");
-            System.out.println("/                       1.North                       /");
-            System.out.println("/               2.West           3.East               /");
-            System.out.println("/                       4.South                       /");
-            System.out.println("/-----------------------------------------------------/\u001B[0m");
-
-
-            int[][] move = {{0,-1},{-1,0},{1,0},{0,1}};
-            int way = readNbr(1, 4, "Add way: ", "\u001B[31mMust be from 1 to 4\u001B[0m");
-
-            GamePlayController.move(move[way - 1][0],move[way - 1][1]);
-
-            int col = GamePlayController.checkCollision();
-            if (col == 1) {
-                System.out.println("\u001B[36m/---------------------Run or Fight--------------------/");
-                System.out.println("/                  You met the enemy                  /");
-                System.out.println("/                     Run or Fight?                   /");
-                System.out.println("/                       1      0                      /");
-                System.out.println("/-----------------------------------------------------/\u001B[0m");
-
-                int input = readNbr(0, 1, "Your choose: ", "\u001B[31mMust be 1 or 2\u001B[0m");
-
-                int res;
-                if (input == 1)
-                    res = CharactherController.run(Main.hero, CharactherController.newEnemy());
-                else
-                    res = CharactherController.fight(Main.hero, CharactherController.newEnemy());
-
-                switch (res) {
-                    case 0:
-                        System.out.println("\u001B[36m/---------------------Run or Fight--------------------/");
-                        System.out.println("/                       YOU DIED                      /");
-                        System.out.println("/         exit           retry        change hero     /");
-                        System.out.println("/           0              1              2           /");
-                        System.out.println("/-----------------------------------------------------/\u001B[0m");
-                        return readNbr(0, 2, "Your choose: ", "\u001B[31mMust be from 0 to 2\u001B[0m");
-                    case 2:
-                        System.out.println("\u001B[36m//---------------------Run or Fight--------------------/");
-                        System.out.println("/This time you're lucky to run away                   /");
-                        System.out.println("/-----------------------------------------------------/\u001B[0m");
-                        GamePlayController.move(-move[way - 1][0], -move[way - 1][1]);
-                }
-            }
-            hero_pos = Main.hero.getX()+ Main.hero.getY() * Main.map_size;
-        }
-
-        System.out.println("\u001B[36m/----------------------Simulation---------------------/");
-        System.out.println("/                       YOU WIN!                      /");
-        System.out.println("/                     NEXT LEVEL " + Main.hero.getLevel() + 1 + "                    /");
-        System.out.println("/-----------------------------------------------------/\u001B[0m\n");
-        return 3;
-    }
-
     static private String readStr(String command) {
         Scanner in = new Scanner(System.in);
         String name;
@@ -229,7 +240,7 @@ public class ConsoleStartGame {
             } catch (Exception e) {
                 System.out.println(error);
             }
-        } while (input < min && input > max);
+        } while (input < min || input > max);
         return input;
     }
 

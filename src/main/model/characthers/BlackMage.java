@@ -5,6 +5,6 @@ package main.model.characthers;
  */
 public class BlackMage extends Characther {
     public BlackMage() {
-        super("BlackMage", 1, 20, 10, 100);
+        super("BlackMage", 1, 20, 8, 100);
     }
 }

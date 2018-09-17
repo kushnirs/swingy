@@ -13,20 +13,21 @@ public class GamePlayController {
     }
 
     public static void addEnemytoMap(int level) {
-        int enemyAmount = (int)(Main.map.length * (level * 0.1 + 0.1));
+        int enemyAmount = (int)(Main.map.length * (level * 0.05 + 0.1));
         for (int i = 0; i < enemyAmount; i++)
             Main.map[(int)(Math.random() * Main.map.length)] = 1;
     }
 
-    public static void move(int x, int y) {
+    public static int move(int x, int y) {
         int pos = Main.hero.getX() + x + (Main.hero.getY() + y) * Main.map_size;
-        if (pos > Main.map_size * Main.map_size)
-            return;
+        if (pos < 0 || pos > Main.map_size * Main.map_size || (pos < Main.hero.getY() * Main.map_size && y == 1) || (pos >= (Main.hero.getY() + 1) * Main.map_size && y == -1) )
+            return 1;
 
         Main.map[Main.hero.getX()+ Main.hero.getY() * Main.map_size] = 2;
 
         Main.hero.setX(Main.hero.getX() + x);
         Main.hero.setY(Main.hero.getY() + y);
+        return 0;
     }
 
     public static int checkCollision() {

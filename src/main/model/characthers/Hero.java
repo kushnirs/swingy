@@ -74,6 +74,9 @@ public class Hero extends Characther {
         this.weapon = weapon;
     }
 
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
 
     public void  checkExperience() {
         int nextlevel = this.level * 1000 + (this.level - 1) * (this.level - 1) * 450;

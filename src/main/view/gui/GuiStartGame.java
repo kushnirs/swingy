@@ -1,66 +1,51 @@
 package main.view.gui;
 
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
 /**
  * Created by skushnir on 12.09.2018.
  */
-public class GuiStartGame {
-//    private JButton button = new JButton("Press");
-//    private JTextField input = new JTextField("", 5);
-//    private JLabel label = new JLabel("Input:");
-//    private JRadioButton radio1 = new JRadioButton("Select this");
-//    private JRadioButton radio2 = new JRadioButton("Select that");
-//    private JCheckBox check = new JCheckBox("Check", false);
-//
-//    public GuiStartGame() {
-//        super("Swingy");
-//        this.setBounds(100,100,250,100);
-//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//        Container container = this.getContentPane();
-//        container.setLayout(new GridLayout(3,2,2,2));
-//        container.add(label);
-//        container.add(input);
-//
-//        ButtonGroup group = new ButtonGroup();
-//        group.add(radio1);
-//        group.add(radio2);
-//        container.add(radio1);
-//
-//        radio1.setSelected(true);
-//        container.add(radio2);
-//        container.add(check);
-//        button.addActionListener(new ButtonEventListener());
-//        container.add(button);
-//    }
-//
-//    class ButtonEventListener implements ActionListener {
-//        public void actionPerformed(ActionEvent e) {
-//            String message = "";
-//            message += "Button was pressed\n";
-//            message += "Text is " + input.getText() + "\n";
-//            message += (radio1.isSelected()?"Radio #1":"Radio #2")
-//                    + " is selected\n";
-//            message += "CheckBox is " + ((check.isSelected())
-//                    ?"checked":"unchecked");
-//            JOptionPane.showMessageDialog(null,
-//                    message,
-//                    "Output",
-//                    JOptionPane.PLAIN_MESSAGE);
-//        }
-//    }
+public class GuiStartGame extends JFrame {
 
-    // IMAGE BACKGROUND// IMAGE BACKGROUND// IMAGE BACKGROUND// IMAGE BACKGROUND// IMAGE BACKGROUND// IMAGE BACKGROUND
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private int sizeWidth = 600;
+    private int sizeHeight = 400;
+    private int locationX = (screenSize.width - sizeWidth) / 2;
+    private int locationY = (screenSize.height - sizeHeight) / 2;
+
+    public GuiStartGame() {
+        super("Swingy");
+        showHello();
+        setResizable(false);
+        this.setBounds(locationX, locationY, sizeWidth, sizeHeight);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setVisible(true);
+    }
 
 
+    public void showHello() {
+        setContentPane(new Hello(this));
+        pack();
+    }
 
-//        public static void main(String[] args) {
-//            ImagePanel panel = new ImagePanel(new ImageIcon("/Users/sergee/projects/main/src/resources/logo.jpg").getImage().getScaledInstance(100, 100,Image.SCALE_DEFAULT));
-//
-//            JFrame frame = new JFrame();
-//            frame.getContentPane().add(panel);
-//            frame.pack();
-//            frame.setVisible(true);
-//        }
+    public void showNewHero() {
+        setContentPane(new NewHero(this));
+        pack();
+    }
+
+    public void showSelectHero() {
+        setContentPane(new SelectHero(this));
+        pack();
+    }
+
+    public void showPlayMission() {
+        setContentPane(new PlayMission(this));
+        pack();
+    }
+
+}
 //
 //    static class ImagePanel extends JPanel {
 //
@@ -121,23 +106,6 @@ public class GuiStartGame {
 //    }
 //
 //
-//    private class ButtonEventListener implements ActionListener {
-//        public void actionPerformed(ActionEvent e) {
-//            String message = "";
-//            message += "Button was pressed\n";
-//            JOptionPane.showMessageDialog(null,
-//                    message,
-//                    "Output",
-//                    JOptionPane.PLAIN_MESSAGE);
-//        }
-//    }
 //
-//    private class CloseListener implements ActionListener{
-//        public void actionPerformed(ActionEvent e) {
-//            //DO SOMETHING
-//            System.exit(0);
-//        }
 //    }
-}
-
 

@@ -3,6 +3,7 @@ package main;
 import main.view.console.ConsoleStartGame;
 import main.view.gui.GuiStartGame;
 import main.model.characthers.*;
+import main.view.gui.Hello;
 
 /**
  * Created by skushnir on 12.09.2018.
@@ -25,7 +26,7 @@ public class Main {
             else if (args[0].compareTo("gui") == 0)
                 new GuiStartGame();
             else
-                ConsoleStartGame.Game();
+                new ConsoleStartGame().Game();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

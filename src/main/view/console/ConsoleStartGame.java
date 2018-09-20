@@ -6,9 +6,6 @@ import main.controller.GamePlayController;
 import main.model.artifacts.*;
 import main.model.characthers.*;
 import main.util.CharactherFactory;
-import main.view.gui.PlayMission;
-
-import java.util.Scanner;
 
 //EXIT = 0;
 //RETRY = 1;
@@ -17,23 +14,19 @@ import java.util.Scanner;
 
 public class ConsoleStartGame {
 
-    public static void Game() {
+    public void Game() {
         initHero();
-        initMission();
+        GamePlayController.initMap();
         int res = startSimulation();
         while (res != 0)
         {
             switch (res) {
                 case 1:
-                    initMission();
+                    GamePlayController.initMap();
                     res = startSimulation();
                 case 2:
                     initHero();
-                    initMission();
-                    res = startSimulation();
-                case 3:
-                    Main.hero.setlevel(Main.hero.getLevel() + 1);
-                    initMission();
+                    GamePlayController.initMap();
                     res = startSimulation();
             }
         }
@@ -41,7 +34,7 @@ public class ConsoleStartGame {
         System.exit(1);
     }
 
-    static void initHero (){
+    private void initHero (){
         System.out.println("\u001B[36m/----------------------Swingy----------------------/");
         System.out.println("/Add number of command:                            /");
         System.out.println("/                                                  /");
@@ -49,7 +42,7 @@ public class ConsoleStartGame {
         System.out.println("/2.Create new Hero                                 /");
         System.out.println("/--------------------------------------------------/\u001B[0m");
 
-        int input = readNbr(1, 2, "Command: ",  "\u001B[31mMust be 1 or 2\u001B[0m");
+        int input = GamePlayController.readNbr(1, 2, "Command: ",  "\u001B[31mMust be 1 or 2\u001B[0m");
 
         if (input == 1)
             selectHero();
@@ -57,7 +50,7 @@ public class ConsoleStartGame {
             createHero();
     }
 
-    static private void selectHero() {
+    private void selectHero() {
         System.out.println("\u001B[36m/-------------------SelectHero---------------------/");
 
 
@@ -65,10 +58,10 @@ public class ConsoleStartGame {
         System.out.println("Add number of Hero: ");
     }
 
-    static private void createHero() {
+    private void createHero() {
         System.out.println("\u001B[36m/-------------------CreateHero---------------------/\u001B[0m");
 
-        String name = readStr("Add name: ");
+        String name = GamePlayController.readStr("Add name: ");
 
         System.out.println("\u001B[36m/-------------------CreateHero---------------------/");
         System.out.println("/Hero type:                                        /");
@@ -79,22 +72,22 @@ public class ConsoleStartGame {
         System.out.println("/4.BLACKMAGE(20, 8, 100)                          /");
         System.out.println("/--------------------------------------------------/\u001B[0m");
 
-        int type = readNbr(1,4,"Choose type of hero and add appropriate number: ","\u001B[31mMust be from 1 to 4\u001B[0m");
+        int type = GamePlayController.readNbr(1,4,"Choose type of hero and add appropriate number: ","\u001B[31mMust be from 1 to 4\u001B[0m");
 
-        int armor = readNbr(0, 1, "Hero have armor?(1 - yes / 0 - no): ", "\u001B[31mMust be 0 or 1\u001B[0m");
+        int armor = GamePlayController.readNbr(0, 1, "Hero have armor?(1 - yes / 0 - no): ", "\u001B[31mMust be 0 or 1\u001B[0m");
         String armor_name = "";
         if (armor == 1)
-            armor_name = readStr("Add armor name: ");
+            armor_name = GamePlayController.readStr("Add armor name: ");
 
-        int helm = readNbr(0, 1, "Hero have helm?(1 - yes / 0 - no): ", "\u001B[31mMust be 0 or 1\u001B[0m");
+        int helm = GamePlayController.readNbr(0, 1, "Hero have helm?(1 - yes / 0 - no): ", "\u001B[31mMust be 0 or 1\u001B[0m");
         String helm_name = "";
         if (helm == 1)
-            helm_name = readStr("Add helm name: ");
+            helm_name = GamePlayController.readStr("Add helm name: ");
 
-        int weapon = readNbr(0, 1, "Hero have weapon?(1 - yes / 0 - no): ", "\u001B[31mMust be 0 or 1\u001B[0m");
+        int weapon = GamePlayController.readNbr(0, 1, "Hero have weapon?(1 - yes / 0 - no): ", "\u001B[31mMust be 0 or 1\u001B[0m");
         String weapon_name = "";
         if (weapon == 1)
-            weapon_name = readStr("Add weapon name: ");
+            weapon_name = GamePlayController.readStr("Add weapon name: ");
 
         Characther tmp = null;
         switch (type) {
@@ -115,14 +108,9 @@ public class ConsoleStartGame {
                 armor == 1 ? new Armor(armor_name) : null, helm == 1 ? new Helm(helm_name) : null, weapon == 1 ? new Weapon(weapon_name) : null);
     }
 
-
-    static private void initMission() {
-        GamePlayController.initMap();
-        GamePlayController.addEnemytoMap(Main.hero.getLevel());
-        CharactherController.initHeroPosition(Main.hero);
-    }
-
-    static private int startSimulation() {
+    public int startSimulation() {
+        if (Main.hero == null || Main.map == null)
+            throw new NullPointerException("ERROR: Null object in ConsoleStartGame.startSimulation");
         while(1 != 0)
         {
             StringBuffer log = new StringBuffer("");
@@ -132,7 +120,11 @@ public class ConsoleStartGame {
             System.out.println("Level: " + Main.hero.getLevel());
             System.out.println("Experience: " + Main.hero.getExperience() + "\u001B[0m");
 
-            drawMap();
+
+            GamePlayController.drawMap(log);
+            System.out.print(log);
+            log = new StringBuffer("");
+
 
             System.out.println("\u001B[36m/-------------------------Way-------------------------/");
             System.out.println("/                       1.North                       /");
@@ -142,7 +134,7 @@ public class ConsoleStartGame {
 
 
             int[][] move = {{0,-1},{-1,0},{1,0},{0,1}};
-            int way = readNbr(1, 4, "Add way: ", "\u001B[31mMust be from 1 to 4\u001B[0m");
+            int way = GamePlayController.readNbr(1, 4, "Add way: ", "\u001B[31mMust be from 1 to 4\u001B[0m");
 
             if (GamePlayController.move(move[way - 1][0],move[way - 1][1]) == 1)
                 break;
@@ -155,7 +147,7 @@ public class ConsoleStartGame {
                 System.out.println("/                       1      0                      /");
                 System.out.println("/-----------------------------------------------------/\u001B[0m");
 
-                int input = readNbr(0, 1, "Your choose: ", "\u001B[31mMust be 1 or 2\u001B[0m");
+                int input = GamePlayController.readNbr(0, 1, "Your choose: ", "\u001B[31mMust be 1 or 2\u001B[0m");
 
                 int res;
                 if (input == 1)
@@ -180,7 +172,7 @@ public class ConsoleStartGame {
                         System.out.println("/         exit           retry        change hero     /");
                         System.out.println("/           0              1              2           /");
                         System.out.println("/-----------------------------------------------------/\u001B[0m");
-                        return readNbr(0, 2, "Your choose: ", "\u001B[31mMust be from 0 to 2\u001B[0m");
+                        return GamePlayController.readNbr(0, 2, "Your choose: ", "\u001B[31mMust be from 0 to 2\u001B[0m");
                     case 2:
                         System.out.println("\u001B[36m/---------------------Run or Fight--------------------/");
                         System.out.println("/This time you're lucky to run away                   /");
@@ -194,54 +186,9 @@ public class ConsoleStartGame {
         System.out.println("/                       YOU WIN!                      /");
         System.out.println("/                     NEXT LEVEL " + (Main.hero.getLevel() + 1) + "                    /");
         System.out.println("/-----------------------------------------------------/\u001B[0m\n");
-        return 3;
+        return 1;
     }
 
-    static private void drawMap() {
-        int size = Main.map_size;
-        int[] map = Main.map;
-        for (int i = 0; i < size * size; i++)
-        {
-            if ((i % size) == 0)
-                System.out.print("\n");
 
-            if (i == Main.hero.getX() + (Main.hero.getY()) * size)
-                System.out.print(" H");
-            else if (map[i] == 0)
-                System.out.print(" .");
-            else if (map[i] == 1)
-                System.out.print(" E");
-            else if (map[i] == 2)
-                System.out.print(" *");
-        }
-//        System.out.println(Main.hero.getX() + (Main.hero.getY()) * size);
-//        System.out.println(Main.hero.getY() * Main.map_size);
-//        System.out.println((Main.hero.getY() + 1) * Main.map_size);
-        System.out.print("\n\n");
-    }
-
-    static private String readStr(String command) {
-        Scanner in = new Scanner(System.in);
-        String name;
-        do {
-            System.out.print(command);
-            name = in.nextLine().replaceAll("(^\\s+|\\s+$)", "");
-        } while (name.length() == 0);
-        return name;
-    }
-
-   static private int readNbr(int min, int max, String command, String error) {
-        Scanner in = new Scanner(System.in);
-        int input = -1;
-        do {
-            try {
-                System.out.print(command);
-                input = Integer.parseInt(in.nextLine());
-            } catch (Exception e) {
-                System.out.println(error);
-            }
-        } while (input < min || input > max);
-        return input;
-    }
 
 }

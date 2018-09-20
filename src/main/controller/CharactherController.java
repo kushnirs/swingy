@@ -9,7 +9,9 @@ import main.util.CharactherFactory;
  */
 public class CharactherController {
 
-    public static int fight(Hero hero, Characther enemy, StringBuffer log) {
+    public static int fight(Hero hero, Characther enemy, StringBuffer log) throws NullPointerException {
+        if (hero == null || enemy == null || log == null)
+            throw new NullPointerException("ERROR: Null object in CharactherController.fight");
         int enemyHp = enemy.getHp(), heroHp = hero.getHp();
         int enemyD = enemy.getDefense(), heroD = hero.getDefense();
         int enemyA = enemy.getAttack(), heroA = hero.getAttack();
@@ -46,8 +48,9 @@ public class CharactherController {
             if (enemyHp <= 0)
             {
                 int exp = 500 * (enemy.getLevel() / 10 + 1);
-                log.append(enemy.getName() + " is DIE\n" + hero.getName() + " is WIN and get " + exp + " experience\n");
+                log.append(enemy.getName() + " is DEAD\n" + hero.getName() + " WINS and get " + exp + " experience\n");
                 hero.setExperience(exp);
+                hero.checkExperience();
                 hero.setHp(heroHp);
                 updateArtifactInfo(hero, log, enemy.getLevel());
                 log.append("***************************FIGHT***********************\n\n\n");
@@ -67,7 +70,9 @@ public class CharactherController {
         return 1;
     }
 
-    static private void updateArtifactInfo (Hero  hero, StringBuffer log, int enemylevel) {
+    static private void updateArtifactInfo (Hero  hero, StringBuffer log, int enemylevel) throws NullPointerException {
+        if (hero == null || log == null)
+            throw new NullPointerException("ERROR: Null object in CharactherController.updateArtifactInfo");
         int art = hero.getWeapon().getQuality() - (enemylevel * 5);
         if (art > 0) {
             hero.getWeapon().setQuality(art);
@@ -100,6 +105,8 @@ public class CharactherController {
     }
 
     public static int run(Hero hero, Characther enemy, StringBuffer log) {
+        if (hero == null || log == null)
+            throw new NullPointerException("ERROR: Null object in CharactherController.run");
         double probability = Math.random();
         if (probability > 0.5)
             return fight(hero, enemy, log);
@@ -114,9 +121,11 @@ public class CharactherController {
         return CharactherFactory.Factory(enemy[i]);
     }
 
-    public static void initHeroPosition(Hero hero) {
-        hero.setX(Main.map_size / 2);
-        hero.setY(Main.map_size / 2);
+    public static void initHeroPosition(Hero hero, int map_size) {
+        if (hero == null)
+            throw new NullPointerException("ERROR: Null object in CharactherController.initHeroPosition");
+        hero.setX(map_size / 2);
+        hero.setY(map_size / 2);
     }
 
 }

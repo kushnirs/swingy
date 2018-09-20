@@ -14,18 +14,16 @@ import java.awt.event.ActionListener;
  */
 public class GamePlayController {
 
-    public static int startSimulation(GuiStartGame jFrame, int x, int y) {
-        if (GamePlayController.move(x, y) == 1)
-            return 1;
-
-//        int col = GamePlayController.checkCollision();
-//        if (col == 1)
-//            // DIALOG
+    public static void startSimulation(GuiStartGame jFrame, int x, int y) {
+        if (GamePlayController.move(x, y) == 1) {
+            winDialog(jFrame);
+        }
+        int col = GamePlayController.checkCollision();
+        if (col == 1)
+            runOrFightDialog(jFrame, x, y);
 //
 //
-//            res = CharactherController.run(Main.hero, CharactherController.newEnemy(), log);
 //
-//        res = CharactherController.fight(Main.hero, CharactherController.newEnemy(), log);
 //
 //        String[] fight = log.toString().split("\n");
 //        for (String str : fight) {
@@ -48,10 +46,38 @@ public class GamePlayController {
 }
 
 
-    private static void win(GuiStartGame jFrame) {
-        JOptionPane.showMessageDialog(jFrame, "<html><h2>YOU WIN</h2><i>You go to the next level</i>");
-        initMap();
-        jFrame.showPlayMission();
+    private static void winDialog(GuiStartGame jFrame) {
+        Object[] options = {"Continue",
+                "Exit"};
+        int res = JOptionPane.showOptionDialog(jFrame, "<html><h2>YOU WIN</h2><i>Would you like go to the next level?</i>", "WinDialog",JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,null,options, options[0]);
+        if (res == 1) {
+            initMap();
+            jFrame.showPlayMission();
+        }
+        else
+            System.exit(0);
+    }
+
+    private static void runOrFightDialog(GuiStartGame jFrame, int x, int y) {
+        Object[] options = {"RUN",
+                "FIGHT"};
+        StringBuffer log = new StringBuffer();
+        int res = JOptionPane.showOptionDialog(jFrame, "<html><h2>YOU WIN</h2><i>Would you like go to the next level?</i>", "WinDialog",JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,null,options, options[0]);
+        if (res == 1)
+            res = CharactherController.run(Main.hero, CharactherController.newEnemy(), log);
+        else
+            res = CharactherController.fight(Main.hero, CharactherController.newEnemy(), log);
+
+        if (res == 2) {
+            JOptionPane.showMessageDialog(jFrame,
+                    "This time you're lucky to run away",
+                    "RUN", JOptionPane.INFORMATION_MESSAGE);
+            GamePlayController.move(-x, -y);
+        }
+        else
+            new FightDialog(jFrame, log);
     }
 
     public static void initMap() {
@@ -135,5 +161,33 @@ public class GamePlayController {
             }
         } while (input < min || input > max);
         return input;
+    }
+
+    // CUSTOM DIALOG
+
+    private static class FightDialog extends Dialog {
+        JTextArea simulation = new JTextArea(10,10);
+
+        public FightDialog(JFrame jFrame, StringBuffer log) {
+            super(jFrame, "FightSimulation", true);
+            simulation.setEditable(false);
+            this.add(simulation);
+            showMessage(log);
+        }
+
+        private void showMessage(StringBuffer log)
+        {
+            String[] fight = log.toString().split("\n");
+            for (String str : fight)
+            {
+                try {
+                    simulation.append(str);
+                    Thread.sleep(500);
+                } catch (InterruptedException qq) {
+                    qq.printStackTrace();
+                }
+            }
+        }
+
     }
 }

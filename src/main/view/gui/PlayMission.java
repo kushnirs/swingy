@@ -31,7 +31,7 @@ public class PlayMission extends JPanel {
         buttonEast.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                moveHandle(1, 0);
+                moveHandle(jFrame,1, 0);
             }
         });
         movePanel.add(buttonEast, BorderLayout.EAST);
@@ -40,7 +40,7 @@ public class PlayMission extends JPanel {
         buttonWest.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GamePlayController.startSimulation(-1,0);
+                moveHandle(jFrame,-1,0);
             }
         });
         movePanel.add(buttonWest, BorderLayout.WEST);
@@ -49,7 +49,7 @@ public class PlayMission extends JPanel {
         buttonNorth.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GamePlayController.startSimulation(0,-1);
+                moveHandle(jFrame,0,-1);
             }
         });
         movePanel.add(buttonNorth, BorderLayout.NORTH);
@@ -58,7 +58,7 @@ public class PlayMission extends JPanel {
         buttonSouth.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GamePlayController.startSimulation(0,1);
+                moveHandle(jFrame,0,1);
             }
         });
         movePanel.add(buttonSouth, BorderLayout.CENTER);
@@ -115,7 +115,7 @@ public class PlayMission extends JPanel {
         this.setVisible(true);
     }
 
-    private void moveHandle(int x, int y) {
-        GamePlayController.startSimulation(x,y);
+    private void moveHandle(GuiStartGame jFrame, int x, int y) {
+        GamePlayController.startSimulation(jFrame, x,y);
     }
 }

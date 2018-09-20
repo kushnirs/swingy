@@ -6,6 +6,7 @@ import main.controller.GamePlayController;
 import main.model.artifacts.*;
 import main.model.characthers.*;
 import main.util.CharactherFactory;
+import main.view.gui.GuiStartGame;
 
 //EXIT = 0;
 //RETRY = 1;
@@ -14,40 +15,52 @@ import main.util.CharactherFactory;
 
 public class ConsoleStartGame {
 
-    public void Game() {
-        initHero();
-        GamePlayController.initMap();
-        int res = startSimulation();
+    public void Game(int res) {
         while (res != 0)
         {
             switch (res) {
                 case 1:
                     GamePlayController.initMap();
+                    Main.hero.updateHero();
                     res = startSimulation();
                 case 2:
-                    initHero();
+                    if (initHero() == 0)
+                        return;
+                    res = startSimulation();
+                case 3:
+                    res = startSimulation();
+                case 4:
+                    if (createHero() == 0)
+                        return;
                     GamePlayController.initMap();
                     res = startSimulation();
             }
         }
-        System.out.println("Good bye");
-        System.exit(1);
     }
 
-    private void initHero (){
+    private int initHero (){
         System.out.println("\u001B[36m/----------------------Swingy----------------------/");
         System.out.println("/Add number of command:                            /");
         System.out.println("/                                                  /");
         System.out.println("/1.Select a previously created Hero                /");
         System.out.println("/2.Create new Hero                                 /");
+        System.out.println("/3.GUI mode                                        /");
         System.out.println("/--------------------------------------------------/\u001B[0m");
 
-        int input = GamePlayController.readNbr(1, 2, "Command: ",  "\u001B[31mMust be 1 or 2\u001B[0m");
+        int input = GamePlayController.readNbr(1, 3, "Command: ",  "\u001B[31mMust be from 1 to 3\u001B[0m");
 
         if (input == 1)
             selectHero();
-        else
-            createHero();
+        else if (input == 2) {
+            if (createHero() == 0);
+            return 0;
+        }
+        else {
+            new GuiStartGame().showHello();
+            return 0;
+        }
+        GamePlayController.initMap();
+        return 1;
     }
 
     private void selectHero() {
@@ -58,7 +71,7 @@ public class ConsoleStartGame {
         System.out.println("Add number of Hero: ");
     }
 
-    private void createHero() {
+    private int createHero() {
         System.out.println("\u001B[36m/-------------------CreateHero---------------------/\u001B[0m");
 
         String name = GamePlayController.readStr("Add name: ");
@@ -67,12 +80,19 @@ public class ConsoleStartGame {
         System.out.println("/Hero type:                                        /");
         System.out.println("/TYPE(attack,defense,hp)                           /");
         System.out.println("/1.ELF(30, 10, 135)                                /");
-        System.out.println("/2.ORC(25, 5, 130)                                /");
-        System.out.println("/3.VILLAIN(5, 6, 100)                             /");
-        System.out.println("/4.BLACKMAGE(20, 8, 100)                          /");
+        System.out.println("/2.ORC(25, 5, 130)                                 /");
+        System.out.println("/3.VILLAIN(5, 6, 100)                              /");
+        System.out.println("/4.BLACKMAGE(20, 8, 100)                           /");
+        System.out.println("                                                   /");
+        System.out.println("/5.GUI mode                                        /");
         System.out.println("/--------------------------------------------------/\u001B[0m");
 
-        int type = GamePlayController.readNbr(1,4,"Choose type of hero and add appropriate number: ","\u001B[31mMust be from 1 to 4\u001B[0m");
+        int type = GamePlayController.readNbr(1,5,"Choose type of hero and add appropriate number: ","\u001B[31mMust be from 1 to 5\u001B[0m");
+        System.out.println("COMMAND:" + type);
+        if (type == 5) {
+            new GuiStartGame().showNewHero();
+            return 0;
+        }
 
         int armor = GamePlayController.readNbr(0, 1, "Hero have armor?(1 - yes / 0 - no): ", "\u001B[31mMust be 0 or 1\u001B[0m");
         String armor_name = "";
@@ -106,35 +126,34 @@ public class ConsoleStartGame {
         }
         Main.hero = new Hero(name, tmp,
                 armor == 1 ? new Armor(armor_name) : null, helm == 1 ? new Helm(helm_name) : null, weapon == 1 ? new Weapon(weapon_name) : null);
+        return 1;
     }
 
-    public int startSimulation() {
+    private int startSimulation() {
         if (Main.hero == null || Main.map == null)
             throw new NullPointerException("ERROR: Null object in ConsoleStartGame.startSimulation");
         while(1 != 0)
         {
-            StringBuffer log = new StringBuffer("");
-
             System.out.println("\u001B[36m/----------------------Simulation---------------------/\u001B[0m");
             System.out.println("\u001B[31mHero: " + Main.hero.getName());
             System.out.println("Level: " + Main.hero.getLevel());
             System.out.println("Experience: " + Main.hero.getExperience() + "\u001B[0m");
 
-
-            GamePlayController.drawMap(log);
-            System.out.print(log);
-            log = new StringBuffer("");
-
+            System.out.print(GamePlayController.drawMap(0));
 
             System.out.println("\u001B[36m/-------------------------Way-------------------------/");
             System.out.println("/                       1.North                       /");
             System.out.println("/               2.West           3.East               /");
             System.out.println("/                       4.South                       /");
+            System.out.println("/                                                     /");
+            System.out.println("/                     5. GUI mode                     /");
             System.out.println("/-----------------------------------------------------/\u001B[0m");
 
 
             int[][] move = {{0,-1},{-1,0},{1,0},{0,1}};
-            int way = GamePlayController.readNbr(1, 4, "Add way: ", "\u001B[31mMust be from 1 to 4\u001B[0m");
+            int way = GamePlayController.readNbr(1, 5, "Add way: ", "\u001B[31mMust be from 1 to 5\u001B[0m");
+            if (way == 5)
+                new GuiStartGame().showPlayMission();
 
             if (GamePlayController.move(move[way - 1][0],move[way - 1][1]) == 1)
                 break;
@@ -150,10 +169,11 @@ public class ConsoleStartGame {
                 int input = GamePlayController.readNbr(0, 1, "Your choose: ", "\u001B[31mMust be 1 or 2\u001B[0m");
 
                 int res;
+                StringBuffer log = new StringBuffer("");
                 if (input == 1)
-                    res = CharactherController.run(Main.hero, CharactherController.newEnemy(),log);
+                    res = CharactherController.run(Main.hero, CharactherController.newEnemy(),log, 0);
                 else
-                    res = CharactherController.fight(Main.hero, CharactherController.newEnemy(),log);
+                    res = CharactherController.fight(Main.hero, CharactherController.newEnemy(),log, 0);
 
                 String[] fight = log.toString().split("\n");
                 for (String str : fight)

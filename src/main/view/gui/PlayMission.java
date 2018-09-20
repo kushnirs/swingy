@@ -2,6 +2,7 @@ package main.view.gui;
 
 import main.Main;
 import main.controller.GamePlayController;
+import main.view.console.ConsoleStartGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,17 +13,30 @@ import java.awt.event.ActionListener;
  * Created by skushnir on 12.09.2018.
  */
 public class PlayMission extends JPanel {
-    private JButton buttonEast =new JButton(new ImageIcon(new ImageIcon("/Users/sergee/projects/swingy/src/resources/right.jpeg").getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT)));
-    private JButton buttonWest = new JButton(new ImageIcon(new ImageIcon("/Users/sergee/projects/swingy/src/resources/left.jpg").getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT)));
-    private JButton buttonNorth = new JButton(new ImageIcon(new ImageIcon("/Users/sergee/projects/swingy/src/resources/up.jpeg").getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT)));
-    private JButton buttonSouth = new JButton(new ImageIcon(new ImageIcon("/Users/sergee/projects/swingy/src/resources/down.jpeg").getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT)));
+    private JButton buttonEast;
+    private JButton buttonWest;
+    private JButton buttonNorth;
+    private JButton buttonSouth;
     private JButton buttonExit = new JButton("EXIT");
     private JButton buttonCNL = new JButton("CNL mode");
 
-    private JTextArea mapArea = new JTextArea();
+    private JTextArea mapArea = new JTextArea(10,10);
 
     public PlayMission(GuiStartGame jFrame) {
         this.setLayout(new BorderLayout());
+
+        // Init Button
+        try {
+            buttonEast = new JButton(new ImageIcon(new ImageIcon(getClass().getResource("/resources/right.jpeg")).getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT)));
+            buttonWest = new JButton(new ImageIcon(new ImageIcon(getClass().getResource("/resources/left.jpg")).getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT)));
+            buttonNorth = new JButton(new ImageIcon(new ImageIcon(getClass().getResource("/resources/up.jpeg")).getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT)));
+            buttonSouth = new JButton(new ImageIcon(new ImageIcon(getClass().getResource("/resources/down.jpeg")).getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT)));
+        }
+        catch (Exception e)
+        {
+            System.out.println("ERROR: Image not found");
+            System.exit(1);
+        }
 
         //Move_Panel
         JPanel movePanel = new JPanel(new BorderLayout());
@@ -65,16 +79,26 @@ public class PlayMission extends JPanel {
 
         // SOUTH PANEL
         JPanel southPanel = new JPanel(new GridLayout());
+        buttonExit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+        buttonCNL.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jFrame.dispose();
+                new ConsoleStartGame().Game(3);
+            }
+        });
         southPanel.add(buttonExit);
         southPanel.add(buttonCNL);
         movePanel.add(southPanel, BorderLayout.SOUTH);
 
         //Map_Panel
-        StringBuffer log = new StringBuffer();
-        GamePlayController.drawMap(log);
-        System.out.print(log.toString());
         mapArea.setEditable(false);
-        mapArea.append(log.toString());
+        mapArea.append( GamePlayController.drawMap(1).toString());
 
         //Hero_info
         Container typeBox = Box.createVerticalBox();
@@ -116,6 +140,6 @@ public class PlayMission extends JPanel {
     }
 
     private void moveHandle(GuiStartGame jFrame, int x, int y) {
-        GamePlayController.startSimulation(jFrame, x,y);
+        GamePlayController.startSimulation(jFrame, mapArea, x, y);
     }
 }

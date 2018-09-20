@@ -1,5 +1,7 @@
 package main.view.gui;
 
+import main.view.console.ConsoleStartGame;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -14,6 +16,7 @@ public class SelectHero extends JPanel {
 
     private JButton buttonNew = new JButton("New Hero");
     private JButton buttonSelect = new JButton("Select Hero");
+    private JButton buttonCLI = new JButton("CLI mode");
     String[] elements = {"element 1", "element 2", "element 3", "element 2", "element 2", "element 2", "element 2", "element 2", "element 2", "element 2", "element 2", "element 2", "element 3", "element 2", "element 3", "element 2", "element 3", "element 2", "element 3", "element 2", "element 3", "element 2", "element 3", "element 2", "element 3"};
     private JList heroList = new JList(elements);
     private JTextArea heroInfo = new JTextArea(10, 20);
@@ -47,7 +50,7 @@ public class SelectHero extends JPanel {
 
         //BUTTON_PANEL
         JPanel buttonPanel= new JPanel();
-        buttonPanel.setLayout(new GridLayout(0, 2, 10,10));
+        buttonPanel.setLayout(new GridLayout(0, 3, 10,10));
         buttonNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -63,8 +66,18 @@ public class SelectHero extends JPanel {
             }
         });
 
+        buttonCLI.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jFrame.dispose();
+                new ConsoleStartGame().Game(2);
+            }
+        });
+
         buttonPanel.add(buttonSelect);
         buttonPanel.add(buttonNew);
+        buttonPanel.add(buttonCLI);
+
 
         // JLABEL_PANEL
         JPanel selectPanel = new JPanel();

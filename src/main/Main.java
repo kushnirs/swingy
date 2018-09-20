@@ -17,7 +17,6 @@ public class Main {
 
 //        GuiStartGame app = new GuiStartGame();
 //        app.setVisible(true);
-
         try {
             if (args.length != 1)
                 throw new Exception("Wrong amount of argument(must be 1)");
@@ -26,7 +25,7 @@ public class Main {
             else if (args[0].compareTo("gui") == 0)
                 new GuiStartGame();
             else
-                new ConsoleStartGame().Game();
+                new ConsoleStartGame().Game(2);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

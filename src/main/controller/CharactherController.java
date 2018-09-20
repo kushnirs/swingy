@@ -9,7 +9,7 @@ import main.util.CharactherFactory;
  */
 public class CharactherController {
 
-    public static int fight(Hero hero, Characther enemy, StringBuffer log) throws NullPointerException {
+    public static int fight(Hero hero, Characther enemy, StringBuffer log, int mode) throws NullPointerException {
         if (hero == null || enemy == null || log == null)
             throw new NullPointerException("ERROR: Null object in CharactherController.fight");
         int enemyHp = enemy.getHp(), heroHp = hero.getHp();
@@ -42,9 +42,16 @@ public class CharactherController {
         while (heroHp > 0 && enemyHp > 0)
         {
             log.append("***************************FIGHT***********************\n");
-            log.append("\u001B[36m" + hero.getName() + " HP: " + heroHp + "\n" + enemy.getName() + " HP: " + enemyHp + "\n" + "\u001B[0m");
+            if (mode == 0)
+                log.append("\u001B[36m" + hero.getName() + " HP: " + heroHp + "\n" + enemy.getName() + " HP: " + enemyHp + "\n" + "\u001B[0m");
+            else
+                log.append(hero.getName() + " HP: " + heroHp + "\n" + enemy.getName() + " HP: " + enemyHp + "\n");
             enemyHp -= heroA;
-            log.append("\u001B[31m" + hero.getName() + " attack " + enemy.getName() + weaponN + " and decrease " + heroA + "hp\n" + "\u001B[0m");
+            if (mode == 0)
+                log.append("\u001B[31m" + hero.getName() + " attack " + enemy.getName() + weaponN + " and decrease " + heroA + "hp\n" + "\u001B[0m");
+            else
+                log.append(hero.getName() + " attack " + enemy.getName() + weaponN + " and decrease " + heroA + "hp\n");
+
             if (enemyHp <= 0)
             {
                 int exp = 500 * (enemy.getLevel() / 10 + 1);
@@ -58,10 +65,13 @@ public class CharactherController {
             }
 
             heroHp -= enemyA;
-            log.append("\u001B[32m" + enemy.getName() + " attack " + hero.getName() + armorN + helmN + " and decrease " + enemyA + "hp\n" + "\u001B[0m");
+            if (mode == 0)
+                log.append("\u001B[32m" + enemy.getName() + " attack " + hero.getName() + armorN + helmN + " and decrease " + enemyA + "hp\n" + "\u001B[0m");
+            else
+                log.append(enemy.getName() + " attack " + hero.getName() + armorN + helmN + " and decrease " + enemyA + "hp\n");
             if (heroHp <= 0)
             {
-                log.append(hero.getName() + " is DIE\n");
+                log.append(hero.getName() + " is DEAD\n");
                 log.append("***************************FIGHT************************\n\n\n");
                 return 0;
             }
@@ -70,48 +80,52 @@ public class CharactherController {
         return 1;
     }
 
-    static private void updateArtifactInfo (Hero  hero, StringBuffer log, int enemylevel) throws NullPointerException {
-        if (hero == null || log == null)
-            throw new NullPointerException("ERROR: Null object in CharactherController.updateArtifactInfo");
-        int art = hero.getWeapon().getQuality() - (enemylevel * 5);
-        if (art > 0) {
-            hero.getWeapon().setQuality(art);
-            log.append(hero.getWeapon().getName() + " quality = " + art + "\n");
-        }
-        else {
-            hero.setWeapon(null);
-            log.append(hero.getName() + " droped his " + hero.getWeapon().getName() + "\n");
-        }
-
-        art = hero.getHelm().getQuality() - (enemylevel * 7);
-        if (art > 0) {
-            hero.getHelm().setQuality(art);
-            log.append(hero.getHelm().getName() + " quality = " + art + "\n");
-        }
-        else {
-            hero.setHelm(null);
-            log.append(hero.getName() + " droped his " + hero.getHelm().getName() + "\n");
-        }
-
-        art = hero.getArmor().getQuality() - (enemylevel * 9);
-        if (art > 0) {
-            hero.getArmor().setQuality(art);
-            log.append(hero.getArmor().getName() + " quality = " + art + "\n");
-        }
-        else {
-            hero.setArmor(null);
-            log.append(hero.getArmor() + " droped his " + hero.getArmor().getName() + "\n");
-        }
-    }
-
-    public static int run(Hero hero, Characther enemy, StringBuffer log) {
+    public static int run(Hero hero, Characther enemy, StringBuffer log, int mode) throws NullPointerException {
         if (hero == null || log == null)
             throw new NullPointerException("ERROR: Null object in CharactherController.run");
         double probability = Math.random();
         if (probability > 0.5)
-            return fight(hero, enemy, log);
+            return fight(hero, enemy, log, mode);
         else
             return 2;
+    }
+
+    static private void updateArtifactInfo (Hero  hero, StringBuffer log, int enemylevel) throws NullPointerException {
+        if (hero == null || log == null)
+            throw new NullPointerException("ERROR: Null object in CharactherController.updateArtifactInfo");
+        int art;
+        if (hero.getWeapon() != null) {
+            art = hero.getWeapon().getQuality() - (enemylevel * 5);
+            if (art > 0) {
+                hero.getWeapon().setQuality(art);
+                log.append(hero.getWeapon().getName() + " quality = " + art + "\n");
+            } else {
+                hero.setWeapon(null);
+                log.append(hero.getName() + " droped his " + hero.getWeapon().getName() + "\n");
+            }
+        }
+
+        if (hero.getHelm() != null) {
+            art = hero.getHelm().getQuality() - (enemylevel * 7);
+            if (art > 0) {
+                hero.getHelm().setQuality(art);
+                log.append(hero.getHelm().getName() + " quality = " + art + "\n");
+            } else {
+                hero.setHelm(null);
+                log.append(hero.getName() + " droped his " + hero.getHelm().getName() + "\n");
+            }
+        }
+
+        if (hero.getArmor() != null) {
+            art = hero.getArmor().getQuality() - (enemylevel * 9);
+            if (art > 0) {
+                hero.getArmor().setQuality(art);
+                log.append(hero.getArmor().getName() + " quality = " + art + "\n");
+            } else {
+                hero.setArmor(null);
+                log.append(hero.getArmor() + " droped his " + hero.getArmor().getName() + "\n");
+            }
+        }
     }
 
     public static Characther newEnemy() {
@@ -121,7 +135,7 @@ public class CharactherController {
         return CharactherFactory.Factory(enemy[i]);
     }
 
-    public static void initHeroPosition(Hero hero, int map_size) {
+    public static void initHeroPosition(Hero hero, int map_size) throws NullPointerException{
         if (hero == null)
             throw new NullPointerException("ERROR: Null object in CharactherController.initHeroPosition");
         hero.setX(map_size / 2);

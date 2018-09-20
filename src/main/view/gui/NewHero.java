@@ -12,12 +12,15 @@ import main.model.artifacts.Helm;
 import main.model.artifacts.Weapon;
 import main.util.CharactherFactory;
 import main.model.characthers.*;
+import main.view.console.ConsoleStartGame;
+
 /**
  * Created by skushnir on 12.09.2018.
  */
 public class NewHero extends JPanel {
 
     private JButton buttonCreate = new JButton("Create Hero");
+    private JButton buttonCLI = new JButton("CLI mode");
     private JTextField nameTextField = new JTextField(20);
     private JLabel nameLabel = new JLabel("HERO NAME:");
     private JRadioButton typeRadioButton;
@@ -150,13 +153,22 @@ public class NewHero extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String radioCommand = radioGroup.getSelection().getActionCommand();
-                System.out.print(nameTextField.getText());
                 Main.hero = new Hero(nameTextField.getText(), CharactherFactory.Factory(radioCommand), armorArtifact, helmArtifact, weaponArtifact);
                 GamePlayController.initMap();
                 jFrame.showPlayMission();
             }
         });
+
+        buttonCLI.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jFrame.dispose();
+                new ConsoleStartGame().Game(4);
+            }
+        });
+
         buttonPanel.add(buttonCreate);
+        buttonPanel.add(buttonCLI);
 
         this.add(namePanel, BorderLayout.NORTH);
         this.add(typeBox, BorderLayout.WEST);

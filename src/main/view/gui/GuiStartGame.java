@@ -1,7 +1,9 @@
 package main.view.gui;
 
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -15,8 +17,22 @@ public class GuiStartGame extends JFrame {
     private int locationX = (screenSize.width - sizeWidth) / 2;
     private int locationY = (screenSize.height - sizeHeight) / 2;
 
+    public static BufferedImage floorImg;
+    public static ImageIcon heroImg;
+    public static ImageIcon enemyImg;
+    public static ImageIcon stepLImg;
+    public static ImageIcon stepRImg;
+    public static ImageIcon stepDImg;
+    public static ImageIcon stepUImg;
+    public static ImageIcon rightImg;
+    public static ImageIcon leftImg;
+    public static ImageIcon upImg;
+    public static ImageIcon downImg;
+    public static ImageIcon logoImg;
+
     public GuiStartGame() {
         super("Swingy");
+        initIMG();
         showHello();
         setResizable(false);
         this.setBounds(locationX, locationY, sizeWidth, sizeHeight);
@@ -24,6 +40,38 @@ public class GuiStartGame extends JFrame {
         this.setVisible(true);
     }
 
+
+    private void initIMG() {
+        try {
+            // TEXTURE IMG
+//            floorImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/rock.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
+            floorImg = ImageIO.read(getClass().getResource("/resources/desert.jpg"));
+            heroImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/hero.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
+            enemyImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/enemy.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
+
+            stepLImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/steps_left.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
+            stepRImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/steps_right.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
+            stepDImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/steps_down.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
+            stepUImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/steps_up.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
+
+
+            // DIRECTION IMG
+
+            rightImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/right.jpeg")).getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT));
+            leftImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/left.jpg")).getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT));
+            upImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/up.jpeg")).getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT));
+            downImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/down.jpeg")).getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT));
+
+            // LOGO IMG
+            logoImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/logo.jpg")).getImage().getScaledInstance(sizeWidth, sizeHeight - 100, Image.SCALE_DEFAULT));
+        } catch (Exception e) {
+            System.out.println("ERROR: Image not found");
+            System.exit(1);
+        }
+
+
+
+    }
 
     public void showHello() {
         setContentPane(new Hello(this));
@@ -46,66 +94,4 @@ public class GuiStartGame extends JFrame {
     }
 
 }
-//
-//    static class ImagePanel extends JPanel {
-//
-//        private Image img;
-//
-//        public ImagePanel(String img) {
-//            this(new ImageIcon(img).getImage());
-//        }
-//
-//        public ImagePanel(Image img) {
-//            this.img = img;
-//            Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
-//            setPreferredSize(size);
-//            setMinimumSize(size);
-//            setMaximumSize(size);
-//            setSize(size);
-//            setLayout(null);
-//        }
-//
-//        public void paintComponent(Graphics g) {
-//            g.drawImage(img, 0, 0, null);
-//        }
-//    }
-
-
-
-    // IMAGE BACKGROUND// IMAGE BACKGROUND// IMAGE BACKGROUND// IMAGE BACKGROUND// IMAGE BACKGROUND// IMAGE BACKGROUND
-
-
-
-
-
-//    private JButton buttonNew = new JButton("New Game");
-//    private JButton buttonExit = new JButton("Exit");
-//    private JLabel logo = new JLabel(new ImageIcon("/Users/sergee/projects/main/src/resources/images.png"), JLabel.CENTER);
-//
-//    public GuiStartGame() {
-//        super("Swingy");
-//        this.setBounds(100,100,300,550);
-//        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//
-//        String[]    colName = {"name"};
-//        String[][] lol = {{"lol1"}, {"lol2"}, {"lol3"}};
-////        Container container = this.getContentPane();
-//
-//        this.add(new JTable(lol, colName));
-//        logo.setBounds(JLabel.CENTER, 10, 100, 100);
-//        this.add(logo);
-//
-//        buttonNew.addActionListener(new ButtonEventListener());
-//        buttonNew.setBounds(JButton.CENTER,200, 100, 20);
-//        this.add(buttonNew);
-//
-//        buttonExit.addActionListener(new CloseListener());
-//        buttonExit.setBounds(JButton.CENTER,300, 100, 20);
-//        this.add(buttonExit);
-//    }
-//
-//
-//
-//    }
 

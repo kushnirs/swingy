@@ -46,9 +46,9 @@ public class Hello extends JPanel {
         panel.add(buttonCLI);
         panel.add(buttonExit);
 
-        URL path = getClass().getResource("/resources/3.jpg");
+        URL path = getClass().getResource("/resources/logo.jpg");
         if (path != null)
-            this.add(new JLabel(new ImageIcon(new ImageIcon(path).getImage().getScaledInstance(sizeWidth, sizeHeight - 100, Image.SCALE_DEFAULT))), BorderLayout.NORTH);
+            this.add(new JLabel(GuiStartGame.logoImg), BorderLayout.NORTH);
         this.add(panel, BorderLayout.CENTER);
         this.setVisible(true);
     }

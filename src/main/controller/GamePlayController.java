@@ -2,6 +2,7 @@ package main.controller;
 
 import main.Main;
 import main.view.gui.GuiStartGame;
+import main.view.gui.PlayMission;
 
 import java.util.Scanner;
 import javax.swing.*;
@@ -14,13 +15,12 @@ import java.awt.event.ActionListener;
  */
 public class GamePlayController {
 
-    public static void startSimulation(GuiStartGame jFrame, JTextArea mapArea, int x, int y) {
-        if (move(x, y) == 1)
+    public static void startSimulation(GuiStartGame jFrame, JLabel[] mapArena, ImageIcon[] arr,  int x, int y) {
+        int res = move(x, y);
+        guiDrawMap(mapArena, arr);
+        if (res == 1)
             winDialog(jFrame);
-        mapArea.setText("");
-        mapArea.append(drawMap(1).toString());
-        int col = checkCollision();
-        if (col == 1)
+        else if (res == 2)
             runOrFightDialog(jFrame, x, y);
 }
 
@@ -41,7 +41,6 @@ public class GamePlayController {
         Object[] options = {"Exit", "change hero", "restart"};
         int res = JOptionPane.showOptionDialog(jFrame, "<html><h2>YOU DIE</h2><i>Choose next step</i>", "WinDialog",JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.QUESTION_MESSAGE,null,options, options[2]);
-        System.out.print(res);
         if (res == 2) {
             initMap();
             Main.hero.updateHero();
@@ -82,7 +81,6 @@ public class GamePlayController {
         if (Main.hero == null)
             throw new NullPointerException("ERROR: Null object in GamePlayController.initMap");
         Main.map_size = (Main.hero.getLevel() - 1) * 5 + 10 - (Main.hero.getLevel() % 2);
-        System.out.println(Main.map_size);
         Main.map = new int[Main.map_size * Main.map_size];
         GamePlayController.addEnemytoMap(Main.hero.getLevel());
         CharactherController.initHeroPosition(Main.hero, Main.map_size);
@@ -107,41 +105,51 @@ public class GamePlayController {
 
         Main.hero.setX(Main.hero.getX() + x);
         Main.hero.setY(Main.hero.getY() + y);
+        if (Main.map[Main.hero.getX() + Main.hero.getY() * Main.map_size] == 1) {
+            Main.map[Main.hero.getX()+ Main.hero.getY() * Main.map_size] = 3;
+            return 2;
+        }
+        Main.map[Main.hero.getX()+ Main.hero.getY() * Main.map_size] = 3;
         return 0;
     }
 
-    public static int checkCollision() {
-        if (Main.hero == null || Main.map == null)
-            throw new NullPointerException("ERROR: Null object in GamePlayController.checkCollision");
-        if (Main.map[Main.hero.getX() + Main.hero.getY() * Main.map_size] == 1)
-            return 1;
-        return 0;
+    public static void guiDrawMap(JLabel[] arena, ImageIcon[] arr) {
+        for(int i = 0; i < Main.map.length; i++) {
+            switch (Main.map[i]) {
+                case 0:
+                    arena[i].setIcon(arr[i]);
+                    break;
+                case 1:
+                    arena[i].setIcon(GuiStartGame.enemyImg);
+                    break;
+                case 2:
+                    arena[i].setIcon(PlayMission.stepImg);
+                    Main.map[i] = 4;
+                    break;
+                case 3:
+                    arena[i].setIcon(GuiStartGame.heroImg);
+                    break;
+            }
+        }
     }
 
-    public static StringBuffer drawMap(int mode) {
+    public static StringBuffer drawMap() {
         StringBuffer log = new StringBuffer("");
-        int size = Main.map_size;
         int[] map = Main.map;
-        for (int i = 0; i < size * size; i++)
-        {
-            if ((i % size) == 0)
+        for (int i = 0; i < Main.map_size * Main.map_size; i++) {
+            if ((i % Main.map_size) == 0)
                 log.append("\n");
 
-            if (i == Main.hero.getX() + (Main.hero.getY()) * size)
-                log.append("  H");
-            else if (map[i] == 0)
+            if (map[i] == 0)
                 log.append("  .");
             else if (map[i] == 1)
                 log.append("  E");
-            else if (map[i] == 2)
-            {
-                if (mode == 0)
-                    log.append("\u001B[31m  .\u001B[0m");
-                else
-                    log.append(" ,");
-            }
+            else if (map[i] == 2 || map[i] == 4)
+                log.append("\u001B[31m  .\u001B[0m");
+            else if (map[i] == 3)
+                log.append("  H");
         }
-        log.append("\n\n");
+            log.append("\n\n");
         return log;
     }
 

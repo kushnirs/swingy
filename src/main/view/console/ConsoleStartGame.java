@@ -23,17 +23,21 @@ public class ConsoleStartGame {
                     GamePlayController.initMap();
                     Main.hero.updateHero();
                     res = startSimulation();
+                    break;
                 case 2:
                     if (initHero() == 0)
                         return;
                     res = startSimulation();
+                    break;
                 case 3:
                     res = startSimulation();
+                    break;
                 case 4:
                     if (createHero() == 0)
                         return;
                     GamePlayController.initMap();
                     res = startSimulation();
+                    break;
             }
         }
     }
@@ -52,8 +56,8 @@ public class ConsoleStartGame {
         if (input == 1)
             selectHero();
         else if (input == 2) {
-            if (createHero() == 0);
-            return 0;
+            if (createHero() == 0)
+                return 0;
         }
         else {
             new GuiStartGame().showHello();
@@ -88,7 +92,7 @@ public class ConsoleStartGame {
         System.out.println("/--------------------------------------------------/\u001B[0m");
 
         int type = GamePlayController.readNbr(1,5,"Choose type of hero and add appropriate number: ","\u001B[31mMust be from 1 to 5\u001B[0m");
-        System.out.println("COMMAND:" + type);
+
         if (type == 5) {
             new GuiStartGame().showNewHero();
             return 0;
@@ -139,7 +143,7 @@ public class ConsoleStartGame {
             System.out.println("Level: " + Main.hero.getLevel());
             System.out.println("Experience: " + Main.hero.getExperience() + "\u001B[0m");
 
-            System.out.print(GamePlayController.drawMap(0));
+            System.out.print(GamePlayController.drawMap());
 
             System.out.println("\u001B[36m/-------------------------Way-------------------------/");
             System.out.println("/                       1.North                       /");
@@ -152,14 +156,15 @@ public class ConsoleStartGame {
 
             int[][] move = {{0,-1},{-1,0},{1,0},{0,1}};
             int way = GamePlayController.readNbr(1, 5, "Add way: ", "\u001B[31mMust be from 1 to 5\u001B[0m");
-            if (way == 5)
+            if (way == 5) {
                 new GuiStartGame().showPlayMission();
+                return 0;
+            }
 
-            if (GamePlayController.move(move[way - 1][0],move[way - 1][1]) == 1)
+            int res = GamePlayController.move(move[way - 1][0],move[way - 1][1]);
+            if (res == 1)
                 break;
-
-            int col = GamePlayController.checkCollision();
-            if (col == 1) {
+            else if(res == 2) {
                 System.out.println("\u001B[36m/---------------------Run or Fight--------------------/");
                 System.out.println("/                  You met the enemy                  /");
                 System.out.println("/                     Run or Fight?                   /");
@@ -168,7 +173,6 @@ public class ConsoleStartGame {
 
                 int input = GamePlayController.readNbr(0, 1, "Your choose: ", "\u001B[31mMust be 1 or 2\u001B[0m");
 
-                int res;
                 StringBuffer log = new StringBuffer("");
                 if (input == 1)
                     res = CharactherController.run(Main.hero, CharactherController.newEnemy(),log, 0);

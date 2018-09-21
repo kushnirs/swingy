@@ -140,6 +140,7 @@ public class CharactherController {
             throw new NullPointerException("ERROR: Null object in CharactherController.initHeroPosition");
         hero.setX(map_size / 2);
         hero.setY(map_size / 2);
+        Main.map[Main.hero.getX() + (Main.hero.getY()) * Main.map_size] = 3;
     }
 
 }

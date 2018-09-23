@@ -24,6 +24,7 @@ public class SelectHero extends JPanel {
 
 
     public SelectHero(GuiStartGame jFrame) {
+        this.setPreferredSize(new Dimension(GuiStartGame.sizeWidth, GuiStartGame.sizeHeight));
         this.setLayout(new BorderLayout());
         JPanel heroPanel = new JPanel();
         heroPanel.setLayout(new GridLayout(0, 2, 10,10));
@@ -51,6 +52,7 @@ public class SelectHero extends JPanel {
         //BUTTON_PANEL
         JPanel buttonPanel= new JPanel();
         buttonPanel.setLayout(new GridLayout(0, 3, 10,10));
+        buttonNew.setForeground(Color.red);
         buttonNew.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,6 +60,7 @@ public class SelectHero extends JPanel {
             }
         });
 
+        buttonSelect.setForeground(Color.red);
         buttonSelect.setEnabled(false);
         buttonSelect.addActionListener(new ActionListener() {
             @Override
@@ -66,6 +69,7 @@ public class SelectHero extends JPanel {
             }
         });
 
+        buttonCLI.setForeground(Color.blue);
         buttonCLI.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

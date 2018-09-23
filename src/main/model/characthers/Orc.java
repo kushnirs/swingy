@@ -5,6 +5,6 @@ package main.model.characthers;
  */
 public class Orc extends Characther {
     public Orc() {
-        super("Orc", 2, 25, 5, 130);
+        super("Orc", 2, 25, 5, 125);
     }
 }

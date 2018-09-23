@@ -14,6 +14,8 @@ import java.awt.image.BufferedImage;
  * Created by skushnir on 12.09.2018.
  */
 public class PlayMission extends JPanel {
+    public static final int panel_size = 800;
+
     private JButton buttonEast;
     private JButton buttonWest;
     private JButton buttonNorth;
@@ -32,17 +34,18 @@ public class PlayMission extends JPanel {
 
     public PlayMission(GuiStartGame jFrame) {
         this.setLayout(new BorderLayout());
-        this.setMaximumSize(new Dimension(100,100));
-
-
-        // MapPanel
+        // MAP PANEL
         mapArena = new JLabel[Main.map.length];
         arrImg = new ImageIcon[Main.map.length];
         imageDividing();
         for (int i = 0; i < mapArena.length; i++)
             mapArena[i] = new JLabel();
-        arenaPanel = new JLabel(new ImageIcon(GuiStartGame.floorImg.getScaledInstance(55 * Main.map_size, 55 * Main.map_size, Image.SCALE_DEFAULT)));
-        JScrollPane arenaScroll = new JScrollPane(arenaPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        JPanel gavno = new JPanel();
+        int unitImgSize =  Main.map_size < 20 ? panel_size / Main.map_size : 50;
+        arenaPanel = new JLabel(new ImageIcon(GuiStartGame.floorImg.getScaledInstance(unitImgSize * Main.map_size, unitImgSize * Main.map_size, Image.SCALE_DEFAULT)));
+        gavno.add(arenaPanel);
+        JScrollPane arenaScroll = new JScrollPane(gavno, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        arenaScroll.setPreferredSize(new Dimension(panel_size, panel_size));
 
         arenaPanel.setLayout(new GridLayout(Main.map_size, Main.map_size));
         for(JLabel arenaLabel : mapArena)
@@ -103,13 +106,15 @@ public class PlayMission extends JPanel {
         movePanel.add(buttonSouth, BorderLayout.CENTER);
 
         // SOUTH PANEL
-        JPanel southPanel = new JPanel(new GridLayout(2,1,5,5));
+        JPanel southPanel = new JPanel(new GridLayout(2,1));
+        buttonExit.setForeground(Color.red);
         buttonExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.exit(0);
             }
         });
+        buttonCNL.setForeground(Color.blue);
         buttonCNL.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -161,12 +166,6 @@ public class PlayMission extends JPanel {
         this.add(infoPanel, BorderLayout.NORTH);
         this.add(arenaScroll, BorderLayout.CENTER);
         this.add(movePanel, BorderLayout.SOUTH);
-//        constraints.gridy = 0;
-//        this.add(infoPanel, constraints);
-//        constraints.gridy = 1;
-//        this.add(arenaScroll, constraints);
-//        constraints.gridy = 2;
-//        this.add(movePanel,constraints);
         this.setVisible(true);
     }
 
@@ -198,12 +197,13 @@ public class PlayMission extends JPanel {
     }
 
     private void imageDividing() {
+        int unitImgSize =  Main.map_size < 20 ? panel_size / Main.map_size : 50;
         for (int r = 0; r < Main.map_size; r++) {
             for (int c = 0; c < Main.map_size; c++) {
                 int w = GuiStartGame.floorImg.getWidth() / Main.map_size;
                 int h = GuiStartGame.floorImg.getHeight() / Main.map_size;
                 BufferedImage b = GuiStartGame.floorImg.getSubimage(c * w, r * h, w, h);
-                arrImg[r * Main.map_size + c] = new ImageIcon(new ImageIcon(b).getImage().getScaledInstance(55,55, Image.SCALE_DEFAULT));
+                arrImg[r * Main.map_size + c] = new ImageIcon(new ImageIcon(b).getImage().getScaledInstance(unitImgSize,unitImgSize, Image.SCALE_DEFAULT));
             }
         }
     }

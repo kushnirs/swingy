@@ -77,15 +77,6 @@ public class GamePlayController {
         }
     }
 
-    public static void initMap() {
-        if (Main.hero == null)
-            throw new NullPointerException("ERROR: Null object in GamePlayController.initMap");
-        Main.map_size = (Main.hero.getLevel() - 1) * 5 + 10 - (Main.hero.getLevel() % 2);
-        Main.map = new int[Main.map_size * Main.map_size];
-        GamePlayController.addEnemytoMap(Main.hero.getLevel());
-        CharactherController.initHeroPosition(Main.hero, Main.map_size);
-    }
-
     public static void addEnemytoMap(int level) {
         if (Main.map == null)
             throw new NullPointerException("ERROR: Null object in GamePlayController.addEnemytoMap");
@@ -98,7 +89,9 @@ public class GamePlayController {
         if (Main.hero == null || Main.map == null)
             throw new NullPointerException("ERROR: Null object in GamePlayController.move");
         int pos = Main.hero.getX() + x + (Main.hero.getY() + y) * Main.map_size;
-        if (pos < 0 || pos > Main.map_size * Main.map_size || (pos < Main.hero.getY() * Main.map_size && (y == 1 || x == -1)) || (pos >= (Main.hero.getY() + 1) * Main.map_size && (x == 1 ||y == -1)) )
+        if (pos < 0 || pos > Main.map_size * Main.map_size ||
+                (pos < Main.hero.getY() * Main.map_size && (y == 1 || x == -1)) ||
+                (pos >= (Main.hero.getY() + 1) * Main.map_size && (x == 1 ||y == -1)) )
             return 1;
 
         Main.map[Main.hero.getX()+ Main.hero.getY() * Main.map_size] = 2;
@@ -113,21 +106,31 @@ public class GamePlayController {
         return 0;
     }
 
+    public static void initMap() {
+        if (Main.hero == null)
+            throw new NullPointerException("ERROR: Null object in GamePlayController.initMap");
+        Main.map_size = (Main.hero.getLevel() - 1) * 5 + 10 - (Main.hero.getLevel() % 2);
+        Main.map = new int[Main.map_size * Main.map_size];
+        GamePlayController.addEnemytoMap(Main.hero.getLevel());
+        CharactherController.initHeroPosition(Main.hero, Main.map_size);
+    }
+
     public static void guiDrawMap(JLabel[] arena, ImageIcon[] arr) {
+        int unitImgSize =  Main.map_size < 20 ? PlayMission.panel_size / Main.map_size : 50;
         for(int i = 0; i < Main.map.length; i++) {
             switch (Main.map[i]) {
                 case 0:
                     arena[i].setIcon(arr[i]);
                     break;
                 case 1:
-                    arena[i].setIcon(GuiStartGame.enemyImg);
+                    arena[i].setIcon(new ImageIcon(GuiStartGame.enemyImg.getImage().getScaledInstance(unitImgSize, unitImgSize, Image.SCALE_DEFAULT)));
                     break;
                 case 2:
-                    arena[i].setIcon(PlayMission.stepImg);
+                    arena[i].setIcon(new ImageIcon(PlayMission.stepImg.getImage().getScaledInstance(unitImgSize, unitImgSize, Image.SCALE_DEFAULT)));
                     Main.map[i] = 4;
                     break;
                 case 3:
-                    arena[i].setIcon(GuiStartGame.heroImg);
+                    arena[i].setIcon(new ImageIcon(GuiStartGame.heroImg.getImage().getScaledInstance(unitImgSize, unitImgSize, Image.SCALE_DEFAULT)));
                     break;
             }
         }

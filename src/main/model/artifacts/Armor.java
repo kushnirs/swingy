@@ -5,6 +5,6 @@ package main.model.artifacts;
  */
 public class Armor extends Artifacts{
     public Armor(String name) {
-        super(name, 9);
+        super(name, 4);
     }
 }

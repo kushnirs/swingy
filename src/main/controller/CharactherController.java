@@ -80,16 +80,6 @@ public class CharactherController {
         return 1;
     }
 
-    public static int run(Hero hero, Characther enemy, StringBuffer log, int mode) throws NullPointerException {
-        if (hero == null || log == null)
-            throw new NullPointerException("ERROR: Null object in CharactherController.run");
-        double probability = Math.random();
-        if (probability > 0.5)
-            return fight(hero, enemy, log, mode);
-        else
-            return 2;
-    }
-
     static private void updateArtifactInfo (Hero  hero, StringBuffer log, int enemylevel) throws NullPointerException {
         if (hero == null || log == null)
             throw new NullPointerException("ERROR: Null object in CharactherController.updateArtifactInfo");
@@ -128,8 +118,18 @@ public class CharactherController {
         }
     }
 
+    public static int run(Hero hero, Characther enemy, StringBuffer log, int mode) throws NullPointerException {
+        if (hero == null || log == null)
+            throw new NullPointerException("ERROR: Null object in CharactherController.run");
+        double probability = Math.random();
+        if (probability > 0.5)
+            return fight(hero, enemy, log, mode);
+        else
+            return 2;
+    }
+
     public static Characther newEnemy() {
-        String[] enemy = {"Elf", "Orc", "Villain", "BlackMage"};
+        String[] enemy = {"Orc", "Villain", "Elf",  "BlackMage"};
         int range[] = {0, 3};
         int i = range[0] + (int) (Math.random() * range[1]);
         return CharactherFactory.Factory(enemy[i]);

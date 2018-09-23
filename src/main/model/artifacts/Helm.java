@@ -5,6 +5,6 @@ package main.model.artifacts;
  */
 public class Helm extends Artifacts{
     public Helm(String name) {
-        super(name, 16);
+        super(name, 7);
     }
 }

@@ -32,6 +32,7 @@ public class NewHero extends JPanel {
 
 
     public NewHero(GuiStartGame jFrame) {
+        this.setPreferredSize(new Dimension(GuiStartGame.sizeWidth, GuiStartGame.sizeHeight));
         this.setLayout(new BorderLayout());
 
         // JLABEL_PANEL
@@ -168,6 +169,7 @@ public class NewHero extends JPanel {
 
         //BUTTON_PANEL
         JPanel buttonPanel= new JPanel();
+        buttonCreate.setForeground(Color.red);
         buttonCreate.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -178,6 +180,7 @@ public class NewHero extends JPanel {
             }
         });
 
+        buttonCLI.setForeground(Color.blue);
         buttonCLI.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

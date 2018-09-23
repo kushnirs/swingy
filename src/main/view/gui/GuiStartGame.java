@@ -12,8 +12,8 @@ import javax.swing.*;
 public class GuiStartGame extends JFrame {
 
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-    private int sizeWidth = 600;
-    private int sizeHeight = 400;
+    public static final int sizeWidth = 600;
+    public static final int sizeHeight = 400;
     private int locationX = (screenSize.width - sizeWidth) / 2;
     private int locationY = (screenSize.height - sizeHeight) / 2;
 
@@ -46,13 +46,13 @@ public class GuiStartGame extends JFrame {
             // TEXTURE IMG
 //            floorImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/rock.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
             floorImg = ImageIO.read(getClass().getResource("/resources/desert.jpg"));
-            heroImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/hero.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
-            enemyImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/enemy.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
+            heroImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/hero.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+            enemyImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/enemy.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
 
-            stepLImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/steps_left.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
-            stepRImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/steps_right.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
-            stepDImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/steps_down.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
-            stepUImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/steps_up.png")).getImage().getScaledInstance(55, 55, Image.SCALE_DEFAULT));
+            stepLImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/steps_left.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+            stepRImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/steps_right.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+            stepDImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/steps_down.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+            stepUImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/steps_up.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
 
 
             // DIRECTION IMG

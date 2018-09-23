@@ -63,7 +63,7 @@ public class GuiStartGame extends JFrame {
             downImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/down.jpeg")).getImage().getScaledInstance(70, 40, Image.SCALE_DEFAULT));
 
             // LOGO IMG
-            logoImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/logo.jpg")).getImage().getScaledInstance(sizeWidth, sizeHeight - 100, Image.SCALE_DEFAULT));
+            logoImg = new ImageIcon(new ImageIcon(getClass().getResource("/resources/logo.jpg")).getImage().getScaledInstance(sizeWidth, sizeHeight - 75, Image.SCALE_DEFAULT));
         } catch (Exception e) {
             System.out.println("ERROR: Image not found");
             System.exit(1);

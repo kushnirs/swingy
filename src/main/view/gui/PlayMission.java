@@ -27,8 +27,13 @@ public class PlayMission extends JPanel {
     private JLabel   arenaPanel;
     ImageIcon[]      arrImg;
 
+    Container infoBox = Box.createHorizontalBox();
+    Container artBox = Box.createHorizontalBox();
+
     public PlayMission(GuiStartGame jFrame) {
         this.setLayout(new BorderLayout());
+        this.setMaximumSize(new Dimension(100,100));
+
 
         // MapPanel
         mapArena = new JLabel[Main.map.length];
@@ -36,30 +41,21 @@ public class PlayMission extends JPanel {
         imageDividing();
         for (int i = 0; i < mapArena.length; i++)
             mapArena[i] = new JLabel();
-        arenaPanel = new JLabel();
+        arenaPanel = new JLabel(new ImageIcon(GuiStartGame.floorImg.getScaledInstance(55 * Main.map_size, 55 * Main.map_size, Image.SCALE_DEFAULT)));
+        JScrollPane arenaScroll = new JScrollPane(arenaPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+
         arenaPanel.setLayout(new GridLayout(Main.map_size, Main.map_size));
-        arenaPanel.setIcon(new ImageIcon(GuiStartGame.floorImg.getScaledInstance(55 * Main.map_size, 55 * Main.map_size, Image.SCALE_DEFAULT)));
         for(JLabel arenaLabel : mapArena)
             arenaPanel.add(arenaLabel);
         GamePlayController.guiDrawMap(mapArena, arrImg);
 
-
-
-
         // Init Button
-        try {
-            buttonEast = new JButton(GuiStartGame.rightImg);
-            buttonWest = new JButton(GuiStartGame.leftImg);
-            buttonNorth = new JButton(GuiStartGame.upImg);
-            buttonSouth = new JButton(GuiStartGame.downImg);
-        }
-        catch (Exception e)
-        {
-            System.out.println("ERROR: Image not found");
-            System.exit(1);
-        }
+        buttonEast = new JButton(GuiStartGame.rightImg);
+        buttonWest = new JButton(GuiStartGame.leftImg);
+        buttonNorth = new JButton(GuiStartGame.upImg);
+        buttonSouth = new JButton(GuiStartGame.downImg);
 
-        //Move_Panel
+        // Move_Panel
         JPanel movePanel = new JPanel(new BorderLayout());
 
         // EAST BUTTON
@@ -68,6 +64,7 @@ public class PlayMission extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 stepImg = GuiStartGame.stepRImg;
                 GamePlayController.startSimulation(jFrame, mapArena, arrImg, 1, 0);
+                updateHeroInfo();
             }
         });
         movePanel.add(buttonEast, BorderLayout.EAST);
@@ -78,6 +75,7 @@ public class PlayMission extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 stepImg = GuiStartGame.stepLImg;
                 GamePlayController.startSimulation(jFrame, mapArena, arrImg, -1, 0);
+                updateHeroInfo();
             }
         });
         movePanel.add(buttonWest, BorderLayout.WEST);
@@ -88,6 +86,7 @@ public class PlayMission extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 stepImg = GuiStartGame.stepUImg;
                 GamePlayController.startSimulation(jFrame, mapArena, arrImg, 0, -1);
+                updateHeroInfo();
             }
         });
         movePanel.add(buttonNorth, BorderLayout.NORTH);
@@ -98,6 +97,7 @@ public class PlayMission extends JPanel {
             public void actionPerformed(ActionEvent e){
                 stepImg = GuiStartGame.stepDImg;
                 GamePlayController.startSimulation(jFrame, mapArena, arrImg, 0, 1);
+                updateHeroInfo();
             }
         });
         movePanel.add(buttonSouth, BorderLayout.CENTER);
@@ -125,20 +125,19 @@ public class PlayMission extends JPanel {
         JPanel infoPanel = new JPanel(new GridLayout(2,1,5,5));
 
         //Hero_info
-        Container infoBox = Box.createHorizontalBox();
-
         infoBox.add(new JLabel("<html><b>Hero:</b> " + "<font color='red'>" + Main.hero.getName() + "</font></html>"));
-        infoBox.add(Box.createHorizontalStrut(5));
+        infoBox.add(Box.createHorizontalStrut(2));
         infoBox.add(new JLabel("<html><b>Level:</b> " + "<font color='red'>" + Main.hero.getLevel() + "</font></html>"));
-        infoBox.add(Box.createHorizontalStrut(5));
+        infoBox.add(Box.createHorizontalStrut(2));
         infoBox.add(new JLabel("<html><b>HP:</b> " + "<font color='red'>" + Main.hero.getHp() + "</font></html>"));
-        infoBox.add(Box.createHorizontalStrut(5));
+        infoBox.add(Box.createHorizontalStrut(2));
         infoBox.add(new JLabel("<html><b>Experience:</b> " + "<font color='red'>" + Main.hero.getExperience() + "</font></html>"));
+
+
 
         infoPanel.add(infoBox);
 
         //Artifact_info
-        Container artBox = Box.createHorizontalBox();
         if (Main.hero.getWeapon() != null)
             artBox.add(new JLabel("<html><b>Weapon:</b> " + "<font color='red'>" + Main.hero.getWeapon().getQuality() + "</font></html>"));
         else
@@ -160,9 +159,42 @@ public class PlayMission extends JPanel {
 
 
         this.add(infoPanel, BorderLayout.NORTH);
-        this.add(arenaPanel, BorderLayout.CENTER);
+        this.add(arenaScroll, BorderLayout.CENTER);
         this.add(movePanel, BorderLayout.SOUTH);
+//        constraints.gridy = 0;
+//        this.add(infoPanel, constraints);
+//        constraints.gridy = 1;
+//        this.add(arenaScroll, constraints);
+//        constraints.gridy = 2;
+//        this.add(movePanel,constraints);
         this.setVisible(true);
+    }
+
+    public void updateHeroInfo() {
+        Component[] tmp = infoBox.getComponents();
+        ((JLabel) tmp[0]).setText("<html><b>Hero:</b> " + "<font color='red'>" + Main.hero.getName() + "</font></html>");
+        ((JLabel) tmp[2]).setText("<html><b>Level:</b> " + "<font color='red'>" + Main.hero.getLevel() + "</font></html>");
+        ((JLabel) tmp[4]).setText("<html><b>HP:</b> " + "<font color='red'>" + Main.hero.getHp() + "</font></html>");
+        ((JLabel) tmp[6]).setText("<html><b>Experience:</b> " + "<font color='red'>" + Main.hero.getExperience() + "</font></html>");
+
+        tmp = artBox.getComponents();
+        if (Main.hero.getWeapon() != null)
+            ((JLabel)tmp[0]).setText("<html><b>Weapon:</b> " + "<font color='red'>" + Main.hero.getWeapon().getQuality() + "</font></html>");
+        else
+            ((JLabel)tmp[0]).setText("<html><b>Weapon:</b> <font color='red'>empty");
+        artBox.add(Box.createHorizontalStrut(5));
+
+        if (Main.hero.getArmor() != null)
+            ((JLabel)tmp[2]).setText("<html><b>Armor:</b> " + "<font color='red'>" + Main.hero.getArmor().getQuality() + "</font></html>");
+        else
+            ((JLabel)tmp[2]).setText("<html><b>Armor:</b> <font color='red'>empty");
+        artBox.add(Box.createHorizontalStrut(5));
+
+        if (Main.hero.getHelm() != null)
+            ((JLabel)tmp[4]).setText("<html><b>Helm:</b> " + "<font color='red'>" + Main.hero.getHelm().getQuality() + "</font></html>");
+        else
+            ((JLabel)tmp[4]).setText("<html><b>Helm:</b> <font color='red'>empty");
+
     }
 
     private void imageDividing() {

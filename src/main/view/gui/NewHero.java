@@ -122,22 +122,41 @@ public class NewHero extends JPanel {
         ButtonGroup radioGroup=new ButtonGroup();
 
         Container typeBox = Box.createVerticalBox();
-
         typeBox.add(new JLabel("Choose type:"));
+
+        ActionListener typeButtonListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (e.getActionCommand() == "Elf")
+                    typeInfo(e.getActionCommand());
+                else if (e.getActionCommand() == "Orc")
+                    typeInfo(e.getActionCommand());
+                else if (e.getActionCommand() == "BlackMage")
+                    typeInfo(e.getActionCommand());
+                else if (e.getActionCommand() == "Villain")
+                    typeInfo(e.getActionCommand());
+            }
+        };
+
         typeBox.add(typeRadioButton=new JRadioButton("Elf"));
+        typeRadioButton.addActionListener(typeButtonListener);
         typeRadioButton.setSelected(true);
         typeRadioButton.setActionCommand("Elf");
+        typeInfo("Elf");
         radioGroup.add(typeRadioButton);
 
         typeBox.add(typeRadioButton=new JRadioButton("Orc"));
+        typeRadioButton.addActionListener(typeButtonListener);
         typeRadioButton.setActionCommand("Orc");
         radioGroup.add(typeRadioButton);
 
         typeBox.add(typeRadioButton=new JRadioButton("BlackMage"));
+        typeRadioButton.addActionListener(typeButtonListener);
         typeRadioButton.setActionCommand("BlackMage");
         radioGroup.add(typeRadioButton);
 
         typeBox.add(typeRadioButton=new JRadioButton("Villain"));
+        typeRadioButton.addActionListener(typeButtonListener);
         typeRadioButton.setActionCommand("Villain");
         radioGroup.add(typeRadioButton);
 
@@ -177,6 +196,15 @@ public class NewHero extends JPanel {
         this.add(buttonPanel, BorderLayout.SOUTH);
 
         this.setVisible(true);
+    }
+
+    private void typeInfo(String typename) {
+        Characther tmp = CharactherFactory.Factory(typename);
+        String info = "Type: " + tmp.getName() +
+                "\nHP: " + tmp.getHp() +
+                "\nAttack: " +tmp.getAttack() +
+                "\nDefense: " + tmp.getDefense();
+        heroInfo.setText(info);
     }
 
     private String addNameArtifact() {

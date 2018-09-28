@@ -1,5 +1,7 @@
 package swingy;
 
+import swingy.storage.HeroStorage;
+import swingy.util.CharactherFactory;
 import swingy.view.console.ConsoleStartGame;
 import swingy.view.gui.GuiStartGame;
 import swingy.model.characthers.*;
@@ -14,9 +16,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        GuiStartGame app = new GuiStartGame();
-//        app.setVisible(true);
         try {
+//            hero = new Hero("lol", CharactherFactory.Factory("ELF"), null, null, null);
+//            new HeroStorage();
             if (args.length != 1)
                 throw new Exception("Wrong amount of argument(must be 1)");
             else if (args[0].compareTo("gui") != 0 && args[0].compareTo("console") != 0)

@@ -2,6 +2,7 @@ package swingy.view.gui;
 
 import swingy.Main;
 import swingy.controller.GamePlayController;
+import swingy.storage.HeroStorage;
 import swingy.view.console.ConsoleStartGame;
 import swingy.view.gui.GuiStartGame;
 
@@ -107,6 +108,7 @@ public class PlayMission extends JPanel {
         buttonExit.setForeground(Color.red);
         buttonExit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                (new HeroStorage()).insertIntoTable();
                 System.exit(0);
             }
         });

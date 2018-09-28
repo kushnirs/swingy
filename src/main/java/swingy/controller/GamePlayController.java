@@ -1,6 +1,7 @@
 package swingy.controller;
 
 import swingy.Main;
+import swingy.storage.HeroStorage;
 import swingy.view.gui.GuiStartGame;
 import swingy.view.gui.PlayMission;
 
@@ -33,8 +34,10 @@ public class GamePlayController {
             initMap();
             jFrame.showPlayMission();
         }
-        else
+        else {
+            (new HeroStorage()).insertIntoTable();
             System.exit(0);
+        }
     }
 
     private static void deadDialog(GuiStartGame jFrame) {
@@ -48,8 +51,10 @@ public class GamePlayController {
         }
         else if (res == 1)
             jFrame.showSelectHero();
-        else
+        else {
+            (new HeroStorage()).insertIntoTable();
             System.exit(0);
+        }
     }
 
     private static void runOrFightDialog(GuiStartGame jFrame, int x, int y) {

@@ -5,6 +5,7 @@ import swingy.controller.CharactherController;
 import swingy.controller.GamePlayController;
 import swingy.model.artifacts.*;
 import swingy.model.characthers.*;
+import swingy.storage.HeroStorage;
 import swingy.util.CharactherFactory;
 import swingy.view.gui.GuiStartGame;
 
@@ -16,7 +17,7 @@ import swingy.view.gui.GuiStartGame;
 public class ConsoleStartGame {
 
     public void Game(int res) {
-        while (res != 0)
+        while (res != 0 && res != -1)
         {
             switch (res) {
                 case 1:
@@ -40,6 +41,8 @@ public class ConsoleStartGame {
                     break;
             }
         }
+        if (res == 0)
+            (new HeroStorage()).insertIntoTable();
     }
 
     private int initHero (){
@@ -158,7 +161,7 @@ public class ConsoleStartGame {
             int way = GamePlayController.readNbr(1, 5, "Add way: ", "\u001B[31mMust be from 1 to 5\u001B[0m");
             if (way == 5) {
                 new GuiStartGame().showPlayMission();
-                return 0;
+                return -1;
             }
 
             int res = GamePlayController.move(move[way - 1][0],move[way - 1][1]);
@@ -208,9 +211,10 @@ public class ConsoleStartGame {
 
         System.out.println("\u001B[36m/----------------------Simulation---------------------/");
         System.out.println("/                       YOU WIN!                      /");
-        System.out.println("/                     NEXT LEVEL " + (Main.hero.getLevel() + 1) + "                    /");
-        System.out.println("/-----------------------------------------------------/\u001B[0m\n");
-        return 1;
+        System.out.println("/         exit           retry        change hero     /");
+        System.out.println("/           0              1              2           /");
+        System.out.println("/-----------------------------------------------------/\u001B[0m");
+        return GamePlayController.readNbr(0, 2, "Your choose: ", "\u001B[31mMust be from 0 to 2\u001B[0m");
     }
 
 

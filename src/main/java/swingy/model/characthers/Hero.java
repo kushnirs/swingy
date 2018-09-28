@@ -9,6 +9,7 @@ import swingy.model.artifacts.Weapon;
  */
 public class Hero extends Characther {
     private int herohp;
+    private String type;
     private int x = 0;
     private int y = 0;
     private int experience;
@@ -18,6 +19,7 @@ public class Hero extends Characther {
 
     public Hero(String name, Characther unit, Armor armor, Helm helm, Weapon weapon) {
         super(name, unit.getLevel(), unit.getAttack(), unit.getDefense(), unit.getHp());
+        this.type = unit.getName();
         this.level = 1;
         this.experience = 0;
         this.armor = armor;
@@ -28,6 +30,8 @@ public class Hero extends Characther {
     }
 
     //Getter
+    public String getType() { return  type; }
+
     public int getExperience() {
         return experience;
     }

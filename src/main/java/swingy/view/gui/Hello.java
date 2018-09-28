@@ -1,5 +1,6 @@
 package swingy.view.gui;
 
+import swingy.storage.HeroStorage;
 import swingy.view.console.ConsoleStartGame;
 
 import java.awt.*;
@@ -20,7 +21,10 @@ public class Hello extends JPanel {
         buttonNew.setForeground(Color.red);
         buttonNew.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                jFrame.showSelectHero();
+                if (GuiStartGame.heroDB.size() == 0)
+                    jFrame.showNewHero();
+                else
+                    jFrame.showSelectHero();
             }
         });
         buttonExit.addActionListener(new ActionListener() {
@@ -44,30 +48,5 @@ public class Hello extends JPanel {
         this.add(new JLabel(GuiStartGame.logoImg), BorderLayout.NORTH);
         this.add(panel, BorderLayout.CENTER);
         this.setVisible(true);
-    }
-
-    private static class JGradientButton extends JButton {
-        private JGradientButton() {
-            super("Gradient Button");
-            setContentAreaFilled(false);
-            setFocusPainted(false); // used for demonstration
-        }
-
-        protected void paintComponent(Graphics g) {
-            final Graphics2D g2 = (Graphics2D) g.create();
-            g2.setPaint(new GradientPaint(
-                    new Point(0, 0),
-                    Color.WHITE,
-                    new Point(0, getHeight()),
-                    Color.PINK.darker()));
-            g2.fillRect(0, 0, getWidth(), getHeight());
-            g2.dispose();
-
-            super.paintComponent(g);
-        }
-
-        public static JGradientButton newInstance() {
-            return new JGradientButton();
-        }
     }
 }

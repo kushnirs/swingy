@@ -1,7 +1,8 @@
 package swingy.view.gui;
 
+import swingy.model.characthers.Hero;
+import swingy.storage.HeroStorage;
 import swingy.view.console.ConsoleStartGame;
-import swingy.view.gui.GuiStartGame;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -9,6 +10,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Created by skushnir on 12.09.2018.
@@ -18,15 +20,36 @@ public class SelectHero extends JPanel {
     private JButton buttonNew = new JButton("New Hero");
     private JButton buttonSelect = new JButton("Select Hero");
     private JButton buttonCLI = new JButton("CLI mode");
-    String[] elements = {"element 1", "element 2", "element 3", "element 2", "element 2", "element 2", "element 2", "element 2", "element 2", "element 2", "element 2", "element 2", "element 3", "element 2", "element 3", "element 2", "element 3", "element 2", "element 3", "element 2", "element 3", "element 2", "element 3", "element 2", "element 3"};
-    private JList heroList = new JList(elements);
     private JTextArea heroInfo = new JTextArea(10, 20);
-    JScrollPane scrollList = new JScrollPane(heroList, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
 
     public SelectHero(final GuiStartGame jFrame) {
+
+        String[] elements = new String[GuiStartGame.heroDB.size()];
+        for (int i = 0; i < GuiStartGame.heroDB.size(); i++)
+            elements[i] = GuiStartGame.heroDB.get(i).getName();
+
+        final JList heroList = new JList(elements);
+        heroList.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+               int i = heroList.getSelectedIndex();
+               String info = "Type: " +  GuiStartGame.heroDB.get(i).getType() + "\n" +
+                       "Level: " +  GuiStartGame.heroDB.get(i).getLevel() + "\n" +
+                       "Experience: " +  GuiStartGame.heroDB.get(i).getExperience() + "\n" +
+                       "Hp: " +  GuiStartGame.heroDB.get(i).getHp() + "\n" +
+                       "Attack: " +  GuiStartGame.heroDB.get(i).getAttack() + "\n" +
+                       "Defense: " +  GuiStartGame.heroDB.get(i).getDefense() + "\n" +
+                       "Armor: " +  (GuiStartGame.heroDB.get(i).getArmor() == null ? "empty" : "available")  + "\n" +
+                       "Weapon: " +  (GuiStartGame.heroDB.get(i).getWeapon() == null ? "empty" : "available") + "\n" +
+                       "Helm: " +  (GuiStartGame.heroDB.get(i).getHelm() == null ? "empty" : "available");
+               heroInfo.setText(info);
+            }
+        });
+        JScrollPane scrollList = new JScrollPane(heroList, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
         this.setPreferredSize(new Dimension(GuiStartGame.sizeWidth, GuiStartGame.sizeHeight));
         this.setLayout(new BorderLayout());
+
         JPanel heroPanel = new JPanel();
         heroPanel.setLayout(new GridLayout(0, 2, 10,10));
         heroList.addListSelectionListener(new ListSelectionListener() {

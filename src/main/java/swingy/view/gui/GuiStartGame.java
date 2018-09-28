@@ -1,7 +1,11 @@
 package swingy.view.gui;
 
+import swingy.model.characthers.Hero;
+import swingy.storage.HeroStorage;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
@@ -28,6 +32,8 @@ public class GuiStartGame extends JFrame {
     public static ImageIcon upImg;
     public static ImageIcon downImg;
     public static ImageIcon logoImg;
+
+    public static ArrayList<Hero> heroDB = (new HeroStorage()).selectFromTable();
 
     public GuiStartGame() {
         super("Swingy");

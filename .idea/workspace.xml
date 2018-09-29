@@ -2,20 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="665c33b5-5756-4b05-b5b5-80c7b5396f13" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_h2database_h2_1_4_197.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_6_0_6.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/swingy/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/swingy/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/swingy/controller/GamePlayController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/swingy/controller/GamePlayController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/swingy/model/characthers/Hero.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/swingy/model/characthers/Hero.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/swingy/storage/HeroStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/swingy/storage/HeroStorage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/swingy/view/console/ConsoleStartGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/swingy/view/console/ConsoleStartGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/swingy/view/gui/GuiStartGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/swingy/view/gui/GuiStartGame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/swingy/view/gui/Hello.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/swingy/view/gui/Hello.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/swingy/view/gui/PlayMission.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/swingy/view/gui/PlayMission.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/swingy/view/gui/SelectHero.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/swingy/view/gui/SelectHero.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swingy.iml" beforeDir="false" afterPath="$PROJECT_DIR$/swingy.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -50,13 +39,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="19100" />
+          <entry key="java" value="19789" />
           <entry key="xml" value="88" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="19099" />
+          <entry key="JAVA" value="19788" />
           <entry key="RegExp" value="1" />
           <entry key="XML" value="88" />
         </counts>
@@ -66,7 +55,7 @@
           <entry key="MF" value="1" />
           <entry key="class" value="5" />
           <entry key="iml" value="1" />
-          <entry key="java" value="129" />
+          <entry key="java" value="133" />
           <entry key="jpeg" value="5" />
           <entry key="jpg" value="5" />
           <entry key="png" value="4" />
@@ -78,7 +67,7 @@
           <entry key="CLASS" value="5" />
           <entry key="IDEA_MODULE" value="1" />
           <entry key="Image" value="14" />
-          <entry key="JAVA" value="129" />
+          <entry key="JAVA" value="133" />
           <entry key="Manifest" value="1" />
           <entry key="XML" value="3" />
         </counts>
@@ -93,8 +82,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/swingy/view/console/ConsoleStartGame.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="467">
-              <caret line="163" column="25" selection-start-line="163" selection-start-column="25" selection-end-line="163" selection-end-column="25" />
+            <state relative-caret-position="1264">
+              <caret line="105" column="9" selection-start-line="105" selection-start-column="9" selection-end-line="105" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -174,10 +163,10 @@
         <option value="$PROJECT_DIR$/src/main/java/swingy/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/swingy/view/gui/GuiStartGame.java" />
         <option value="$PROJECT_DIR$/src/main/java/swingy/view/gui/Hello.java" />
-        <option value="$PROJECT_DIR$/src/main/java/swingy/view/gui/SelectHero.java" />
         <option value="$PROJECT_DIR$/src/main/java/swingy/storage/HeroStorage.java" />
         <option value="$PROJECT_DIR$/src/main/java/swingy/view/gui/PlayMission.java" />
         <option value="$PROJECT_DIR$/src/main/java/swingy/controller/GamePlayController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/swingy/view/gui/SelectHero.java" />
         <option value="$PROJECT_DIR$/src/main/java/swingy/view/console/ConsoleStartGame.java" />
       </list>
     </option>
@@ -718,7 +707,7 @@
     <frame x="0" y="0" width="1920" height="1200" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15548456" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15548456" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Nl-Palette" order="3" />
@@ -728,14 +717,14 @@
       <window_info id="UI Designer" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32920355" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2920354" />
+      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.2920354" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32920355" />
-      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.32920355" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.3283186" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -905,12 +894,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/library/h2-1.4.197.jar!/META-INF/MANIFEST.MF">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/up.jpeg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
+    <entry file="jar://$PROJECT_DIR$/library/h2-1.4.197.jar!/META-INF/MANIFEST.MF" />
+    <entry file="file://$PROJECT_DIR$/target/classes/up.jpeg" />
     <entry file="file://$PROJECT_DIR$/src/main/java/swingy/model/characthers/Characther.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -955,16 +940,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/swingy/storage/HeroStorage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="74" column="9" lean-forward="true" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/swingy/controller/GamePlayController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="434">
@@ -984,16 +959,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/swingy/view/gui/SelectHero.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/swingy/view/gui/Hello.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1001,9 +966,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/swingy/storage/HeroStorage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="970">
+          <caret line="74" column="9" lean-forward="true" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/swingy/view/gui/SelectHero.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-732">
+          <caret line="11" column="37" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/swingy/view/gui/GuiStartGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-187">
+        <state relative-caret-position="256">
           <caret line="35" column="18" selection-start-line="35" selection-start-column="18" selection-end-line="35" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1013,8 +998,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/swingy/view/console/ConsoleStartGame.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="467">
-          <caret line="163" column="25" selection-start-line="163" selection-start-column="25" selection-end-line="163" selection-end-column="25" />
+        <state relative-caret-position="1264">
+          <caret line="105" column="9" selection-start-line="105" selection-start-column="9" selection-end-line="105" selection-end-column="9" />
         </state>
       </provider>
     </entry>

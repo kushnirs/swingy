@@ -56,8 +56,10 @@ public class ConsoleStartGame {
 
         int input = GamePlayController.readNbr(1, 3, "Command: ",  "\u001B[31mMust be from 1 to 3\u001B[0m");
 
-        if (input == 1)
-            selectHero();
+        if (input == 1) {
+            if (selectHero() == 0)
+                return 0;
+        }
         else if (input == 2) {
             if (createHero() == 0)
                 return 0;
@@ -70,12 +72,41 @@ public class ConsoleStartGame {
         return 1;
     }
 
-    private void selectHero() {
+    private int selectHero() {
+        if (GuiStartGame.heroDB.size() == 0) {
+            System.out.println("/-----------Empty Herodb. Create new hero.---------/");
+            return createHero();
+        }
+
         System.out.println("\u001B[36m/-------------------SelectHero---------------------/");
-
-
-        System.out.println("/--------------------------------------------------/\u001B[0m");
+        System.out.println("/\u001B[0mHero info:                                        \u001B[36m/");
+        System.out.println("/\u001B[0m Name, type, level, experience, hp, attack,       \u001B[36m/");
+        System.out.println("/\u001B[0m defense, armor, weapon, helm                     \u001B[36m/");
+        int i = 0;
+        for(Hero hero : GuiStartGame.heroDB){
+            i++;
+            System.out.println("\u001B[36m/--------------------------------------------------/\u001B[0m");
+            System.out.println(i + ". " + hero.getName() + ", " + hero.getType() + ", " + hero.getLevel() + ", " +
+                    hero.getExperience() + ", " + hero.getHp() + ", " + hero.getAttack() + ", " + hero.getDefense() + ", " +
+                    (hero.getArmor() == null ? "armor - empty" : "armor - available") + ", " +
+                            (hero.getWeapon() == null ? "weapon - empty" : "weapon - available") + ", " +
+                                    (hero.getHelm() == null ? "helm - empty" : "helm - available"));
+            System.out.println("\u001B[36m/--------------------------------------------------/\u001B[0m");
+        }
+        System.out.println("\u001B[36m/                                                  /\u001B[0m");
+        System.out.println("\u001B[36m/0. GUI mode                                       /\u001B[0m");
+        System.out.println("\u001B[36m/--------------------------------------------------/\u001B[0m");
         System.out.println("Add number of Hero: ");
+
+        int type = GamePlayController.readNbr(1, i,"Choose type of hero and add appropriate number: ","\u001B[31mMust be from 1 to " + i + "\u001B[0m");
+
+        if (type == 0) {
+            new GuiStartGame().showNewHero();
+            return 0;
+        }
+
+        Main.hero = GuiStartGame.heroDB.get(i - 1);
+        return 1;
     }
 
     private int createHero() {

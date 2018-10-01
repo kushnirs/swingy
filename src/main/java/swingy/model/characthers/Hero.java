@@ -3,27 +3,38 @@ package swingy.model.characthers;
 import swingy.model.artifacts.Armor;
 import swingy.model.artifacts.Helm;
 import swingy.model.artifacts.Weapon;
+import swingy.util.CharactherFactory;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Created by skushnir on 12.09.2018.
  */
 public class Hero extends Characther {
     private int herohp;
+    @NotNull
+    @Size(min = 1, message = "Hero Name must be at least 1 character")
     private String type;
     private int x = 0;
     private int y = 0;
+    @Min(value = 0, message = "Hero Hp should not be less than 0")
     private int experience;
-    private Armor armor;
-    private Helm helm;
-    private Weapon weapon;
+    private Armor armor = null;
+    private Helm helm = null;
+    private Weapon weapon = null;
 
     public Hero(String name, Characther unit, Armor armor, Helm helm, Weapon weapon) {
         super(name, unit.getLevel(), unit.getAttack(), unit.getDefense(), unit.getHp());
         this.type = unit.getName();
         this.level = 1;
         this.experience = 0;
+        CharactherFactory.validate(armor);
         this.armor = armor;
+        CharactherFactory.validate(helm);
         this.helm = helm;
+        CharactherFactory.validate(weapon);
         this.weapon = weapon;
 
         this.herohp = this.hp;

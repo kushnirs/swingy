@@ -13,7 +13,6 @@ import swingy.model.artifacts.Weapon;
 import swingy.util.CharactherFactory;
 import swingy.model.characthers.*;
 import swingy.view.console.ConsoleStartGame;
-import swingy.view.gui.GuiStartGame;
 
 /**
  * Created by skushnir on 12.09.2018.
@@ -22,6 +21,7 @@ public class NewHero extends JPanel {
 
     private JButton buttonCreate = new JButton("Create Hero");
     private JButton buttonCLI = new JButton("CLI mode");
+
     private JTextField nameTextField = new JTextField(20);
     private JLabel nameLabel = new JLabel("HERO NAME:");
     private JRadioButton typeRadioButton;
@@ -30,7 +30,6 @@ public class NewHero extends JPanel {
     private Armor armorArtifact = null;
     private Weapon weaponArtifact = null;
     private Helm helmArtifact = null;
-
 
     public NewHero(final GuiStartGame jFrame) {
         this.setPreferredSize(new Dimension(GuiStartGame.sizeWidth, GuiStartGame.sizeHeight));
@@ -167,7 +166,8 @@ public class NewHero extends JPanel {
         buttonCreate.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String radioCommand = radioGroup.getSelection().getActionCommand();
-                Main.hero = new Hero(nameTextField.getText(), CharactherFactory.Factory(radioCommand), armorArtifact, helmArtifact, weaponArtifact);
+                Main.hero = CharactherFactory.createNewHero(nameTextField.getText(), CharactherFactory.Factory(radioCommand), armorArtifact, helmArtifact, weaponArtifact);
+
                 GamePlayController.initMap();
                 jFrame.showPlayMission();
             }

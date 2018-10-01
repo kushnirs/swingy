@@ -118,6 +118,27 @@ public class CharactherController {
         }
     }
 
+    public static int move(int x, int y) {
+        if (Main.hero == null || Main.map == null)
+            throw new NullPointerException("ERROR: Null object in GamePlayController.move");
+        int pos = Main.hero.getX() + x + (Main.hero.getY() + y) * Main.map_size;
+        if (pos < 0 || pos > Main.map_size * Main.map_size ||
+                (pos < Main.hero.getY() * Main.map_size && (y == 1 || x == -1)) ||
+                (pos >= (Main.hero.getY() + 1) * Main.map_size && (x == 1 ||y == -1)) )
+            return 1;
+
+        Main.map[Main.hero.getX()+ Main.hero.getY() * Main.map_size] = 2;
+
+        Main.hero.setX(Main.hero.getX() + x);
+        Main.hero.setY(Main.hero.getY() + y);
+        if (Main.map[Main.hero.getX() + Main.hero.getY() * Main.map_size] == 1) {
+            Main.map[Main.hero.getX()+ Main.hero.getY() * Main.map_size] = 3;
+            return 2;
+        }
+        Main.map[Main.hero.getX()+ Main.hero.getY() * Main.map_size] = 3;
+        return 0;
+    }
+
     public static int run(Hero hero, Characther enemy, StringBuffer log, int mode) throws NullPointerException {
         if (hero == null || log == null)
             throw new NullPointerException("ERROR: Null object in CharactherController.run");
@@ -126,6 +147,14 @@ public class CharactherController {
             return fight(hero, enemy, log, mode);
         else
             return 2;
+    }
+
+    public static void addEnemytoMap(int level) {
+        if (Main.map == null)
+            throw new NullPointerException("ERROR: Null object in GamePlayController.addEnemytoMap");
+        int enemyAmount = (int)(Main.map.length * (level * 0.05 + 0.1));
+        for (int i = 0; i < enemyAmount; i++)
+            Main.map[(int)(Math.random() * Main.map.length)] = 1;
     }
 
     public static Characther newEnemy() {

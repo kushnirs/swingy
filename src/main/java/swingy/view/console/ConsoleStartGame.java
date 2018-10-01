@@ -162,7 +162,7 @@ public class ConsoleStartGame {
                 tmp = CharactherFactory.Factory("BlackMage");
                 break;
         }
-        Main.hero = new Hero(name, tmp,
+        Main.hero = CharactherFactory.createNewHero(name, tmp,
                 armor == 1 ? new Armor(armor_name) : null, helm == 1 ? new Helm(helm_name) : null, weapon == 1 ? new Weapon(weapon_name) : null);
         return 1;
     }
@@ -195,7 +195,7 @@ public class ConsoleStartGame {
                 return -1;
             }
 
-            int res = GamePlayController.move(move[way - 1][0],move[way - 1][1]);
+            int res = CharactherController.move(move[way - 1][0],move[way - 1][1]);
             if (res == 1)
                 break;
             else if(res == 2) {
@@ -235,7 +235,7 @@ public class ConsoleStartGame {
                         System.out.println("\u001B[36m/---------------------Run or Fight--------------------/");
                         System.out.println("/This time you're lucky to run away                   /");
                         System.out.println("/-----------------------------------------------------/\u001B[0m\n");
-                        GamePlayController.move(-move[way - 1][0], -move[way - 1][1]);
+                        CharactherController.move(-move[way - 1][0], -move[way - 1][1]);
                 }
             }
         }

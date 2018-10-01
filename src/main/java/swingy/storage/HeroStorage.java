@@ -43,7 +43,7 @@ public class HeroStorage {
                 Armor armor = rs.getString("armor").isEmpty() ? null : new Armor(rs.getString("armor"));
                 Helm helm = rs.getString("helm").isEmpty() ? null : new Helm(rs.getString("helm"));
                 Weapon weapon = rs.getString("weapon").isEmpty() ? null : new Weapon(rs.getString("weapon"));
-                tmp.add(new Hero(rs.getString("name"), CharactherFactory.Factory(rs.getString("type")), armor, helm, weapon));
+                tmp.add(CharactherFactory.createNewHero(rs.getString("name"), CharactherFactory.Factory(rs.getString("type")), armor, helm, weapon));
             }
 
         } catch (Exception e) {

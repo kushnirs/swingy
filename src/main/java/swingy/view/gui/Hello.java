@@ -20,6 +20,7 @@ public class Hello extends JPanel {
 
         buttonNew.setForeground(Color.red);
         buttonNew.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (GuiStartGame.heroDB.size() == 0)
                     jFrame.showNewHero();

@@ -12,7 +12,7 @@ public class Hello extends JPanel {
     private JButton buttonCLI = new JButton("CLI mode");
     private JButton buttonExit = new JButton("EXIT");
 
-    public Hello(final GuiStartGame jFrame) {
+    public Hello() {
         this.setPreferredSize(new Dimension(GuiStartGame.sizeWidth, GuiStartGame.sizeHeight));
         this.setLayout(new BorderLayout());
         JPanel panel = new JPanel(new GridLayout(1, 3, 10, 10));

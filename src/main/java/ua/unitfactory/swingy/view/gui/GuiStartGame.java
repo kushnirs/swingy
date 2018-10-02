@@ -39,14 +39,16 @@ public class GuiStartGame extends JFrame {
 
     public static ArrayList<Hero> heroDB = (new HeroStorage()).selectFromTable();
 
+    {
+        initIMG();
+    }
+
     public GuiStartGame() {
         super("Swingy");
-        initIMG();
-        showHello();
         setResizable(false);
-        this.setBounds(locationX, locationY, sizeWidth, sizeHeight);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setVisible(true);
+        showHello();
+        setVisible(true);
     }
 
 
@@ -83,7 +85,7 @@ public class GuiStartGame extends JFrame {
     }
 
     public void showHello() {
-        Hello hello = new Hello(this);
+        Hello hello = new Hello();
         HelloController.addHelloActionListener(hello, this);
         this.setBounds(locationX, locationY, sizeWidth, sizeHeight);
         setContentPane(hello);

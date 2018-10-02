@@ -16,7 +16,6 @@ public class PlayMissionController {
                 // EAST BUTTON
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        playMission.setStepImg(GuiStartGame.stepRImg);
                         GamePlayController.startSimulation(jFrame, playMission.getMapArena(), playMission.getArrImg(), 1, 0);
                         playMission.updateHeroInfo();
                     }
@@ -24,7 +23,6 @@ public class PlayMissionController {
                 // WEST BUTTON
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        playMission.setStepImg(GuiStartGame.stepLImg);
                         GamePlayController.startSimulation(jFrame, playMission.getMapArena(), playMission.getArrImg(), -1, 0);
                         playMission.updateHeroInfo();
                     }
@@ -32,7 +30,6 @@ public class PlayMissionController {
                 // NORTH BUTTON
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        playMission.setStepImg(GuiStartGame.stepUImg);
                         GamePlayController.startSimulation(jFrame, playMission.getMapArena(), playMission.getArrImg(), 0, -1);
                         playMission.updateHeroInfo();
                     }
@@ -40,7 +37,6 @@ public class PlayMissionController {
                 // SOUT BUTTON
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        playMission.setStepImg(GuiStartGame.stepDImg);
                         GamePlayController.startSimulation(jFrame, playMission.getMapArena(), playMission.getArrImg(), 0, 1);
                         playMission.updateHeroInfo();
                     }
@@ -56,7 +52,7 @@ public class PlayMissionController {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         jFrame.dispose();
-                        new ConsoleStartGame().Game(3);
+                        new ConsoleStartGame().Game(ConsoleStartGame.WIN);
                     }
                 });
     }

@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by skushnir on 12.09.2018.
@@ -25,7 +27,8 @@ public class PlayMission extends JPanel {
     private JButton buttonExit = new JButton("EXIT");
     private JButton buttonCNL = new JButton("CLI mode");
 
-    public static ImageIcon stepImg = GuiStartGame.stepUImg;
+    public static final Map<Integer, ImageIcon> moveImg = new HashMap<Integer, ImageIcon>();
+
     private JLabel[] mapArena;
     private JLabel   arenaPanel;
     ImageIcon[]      arrImg;
@@ -35,6 +38,15 @@ public class PlayMission extends JPanel {
 
     public PlayMission(final GuiStartGame jFrame) {
         this.setLayout(new BorderLayout());
+
+        int unitImgSize = Main.map_size < 20 ? PlayMission.panel_size / Main.map_size : 50;
+        moveImg.put(1, new ImageIcon(GuiStartGame.enemyImg.getImage().getScaledInstance(unitImgSize, unitImgSize, Image.SCALE_DEFAULT)));
+        moveImg.put(3, new ImageIcon(GuiStartGame.heroImg.getImage().getScaledInstance(unitImgSize, unitImgSize, Image.SCALE_DEFAULT)));
+        moveImg.put(10, new ImageIcon(GuiStartGame.stepUImg.getImage().getScaledInstance(unitImgSize, unitImgSize, Image.SCALE_DEFAULT)));
+        moveImg.put(20, new ImageIcon(GuiStartGame.stepDImg.getImage().getScaledInstance(unitImgSize, unitImgSize, Image.SCALE_DEFAULT)));
+        moveImg.put(30, new ImageIcon(GuiStartGame.stepLImg.getImage().getScaledInstance(unitImgSize, unitImgSize, Image.SCALE_DEFAULT)));
+        moveImg.put(40, new ImageIcon(GuiStartGame.stepRImg.getImage().getScaledInstance(unitImgSize, unitImgSize, Image.SCALE_DEFAULT)));
+
         // MAP PANEL
         mapArena = new JLabel[Main.map.length];
         arrImg = new ImageIcon[Main.map.length];
@@ -42,7 +54,6 @@ public class PlayMission extends JPanel {
         for (int i = 0; i < mapArena.length; i++)
             mapArena[i] = new JLabel();
         JPanel gavno = new JPanel();
-        int unitImgSize =  Main.map_size < 20 ? panel_size / Main.map_size : 50;
         arenaPanel = new JLabel(new ImageIcon(GuiStartGame.floorImg.getScaledInstance(unitImgSize * Main.map_size, unitImgSize * Main.map_size, Image.SCALE_DEFAULT)));
         gavno.add(arenaPanel);
         JScrollPane arenaScroll = new JScrollPane(gavno, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -160,20 +171,11 @@ public class PlayMission extends JPanel {
     }
 
     // GETTERS
-
-
     public ImageIcon[] getArrImg() {
         return arrImg;
     }
 
     public JLabel[] getMapArena() {
         return mapArena;
-    }
-
-    // SETTERS
-
-
-    public static void setStepImg(ImageIcon stepImg) {
-        PlayMission.stepImg = stepImg;
     }
 }

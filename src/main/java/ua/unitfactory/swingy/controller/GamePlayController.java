@@ -5,7 +5,7 @@ import ua.unitfactory.swingy.storage.HeroStorage;
 import ua.unitfactory.swingy.view.gui.GuiStartGame;
 import ua.unitfactory.swingy.view.gui.PlayMission;
 
-import java.util.Scanner;
+import java.util.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -34,25 +34,58 @@ public class GamePlayController {
         CharactherController.initHeroPosition(Main.hero, Main.map_size);
     }
 
-    public static void guiDrawMap(JLabel[] arena, ImageIcon[] arr) {
-        int unitImgSize =  Main.map_size < 20 ? PlayMission.panel_size / Main.map_size : 50;
-        for(int i = 0; i < Main.map.length; i++) {
-            switch (Main.map[i]) {
-                case 0:
-                    arena[i].setIcon(arr[i]);
-                    break;
-                case 1:
-                    arena[i].setIcon(new ImageIcon(GuiStartGame.enemyImg.getImage().getScaledInstance(unitImgSize, unitImgSize, Image.SCALE_DEFAULT)));
-                    break;
-                case 2:
-                    arena[i].setIcon(new ImageIcon(PlayMission.stepImg.getImage().getScaledInstance(unitImgSize, unitImgSize, Image.SCALE_DEFAULT)));
-                    Main.map[i] = 4;
-                    break;
-                case 3:
-                    arena[i].setIcon(new ImageIcon(GuiStartGame.heroImg.getImage().getScaledInstance(unitImgSize, unitImgSize, Image.SCALE_DEFAULT)));
-                    break;
+    private static class DrawThread extends Thread {
+        JLabel[] arena;
+        ImageIcon[] arr;
+        int arrStart;
+        int arrEnd;
+
+        public DrawThread(JLabel[] arena, ImageIcon[] arr, int arrStart, int arrEnd) {
+            this.arena = arena;
+            this.arr = arr;
+            this.arrStart = arrStart;
+            this.arrEnd = arrEnd;
+        }
+
+        @Override
+        public void run() {
+            for(int i = arrStart; i < arrEnd; i++) {
+                switch (Main.map[i]) {
+                    case 0:
+                        arena[i].setIcon(arr[i]);
+                        break;
+                    default:
+                        arena[i].setIcon(PlayMission.moveImg.get(Main.map[i]));
+                }
             }
         }
+    }
+
+    public static void guiDrawMap(JLabel[] arena, ImageIcon[] arr) {
+        try {
+            int part = Main.map.length / 3;
+
+            DrawThread secondThread = new DrawThread(arena, arr, part, part * 2 );
+            DrawThread thirdThread = new DrawThread(arena, arr, part * 2, Main.map.length);
+            secondThread.run();
+            thirdThread.run();
+
+            for (int i = 0; i < part; i++) {
+                switch (Main.map[i]) {
+                    case 0:
+                        arena[i].setIcon(arr[i]);
+                        break;
+                    default:
+                        arena[i].setIcon(PlayMission.moveImg.get(Main.map[i]));
+                }
+            }
+            secondThread.join();
+            thirdThread.join();
+        }catch (Exception e) {
+            System.out.println("Error in drawThread");
+            System.exit(1);
+        }
+
     }
 
     public static StringBuffer drawMap() {
@@ -66,7 +99,7 @@ public class GamePlayController {
                 log.append("  .");
             else if (map[i] == 1)
                 log.append("  E");
-            else if (map[i] == 2 || map[i] == 4)
+            else if (map[i] >= 10 && map[i] <= 40)
                 log.append("\u001B[31m  .\u001B[0m");
             else if (map[i] == 3)
                 log.append("  H");

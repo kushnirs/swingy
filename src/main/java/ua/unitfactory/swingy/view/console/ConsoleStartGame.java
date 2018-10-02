@@ -12,33 +12,35 @@ import ua.unitfactory.swingy.storage.HeroStorage;
 import ua.unitfactory.swingy.util.CharactherFactory;
 import ua.unitfactory.swingy.view.gui.GuiStartGame;
 
-//EXIT = 0;
-//RETRY = 1;
-//CHANGE = 2;
-//WIN = 3;
-
 public class ConsoleStartGame {
 
+    public static final int EXIT = 0;
+    public static final int RETRY = 1;
+    public static final int CHANGE = 2;
+    public static final int WIN = 3;
+    public static final int CREATE = 4;
+    public static final int GUI = -1;
+
     public void Game(int res) {
-        while (res != 0 && res != -1)
+        while (res != EXIT && res != GUI)
         {
             switch (res) {
-                case 1:
+                case RETRY:
                     GamePlayController.initMap();
                     Main.hero.updateHero();
                     res = startSimulation();
                     break;
-                case 2:
+                case CHANGE:
                     (new HeroStorage()).insertIntoTable();
                     GuiStartGame.heroDB = (new HeroStorage()).selectFromTable();
                     if (initHero() == 0)
                         return;
                     res = startSimulation();
                     break;
-                case 3:
+                case WIN:
                     res = startSimulation();
                     break;
-                case 4:
+                case CREATE:
                     if (createHero() == 0)
                         return;
                     GamePlayController.initMap();
@@ -196,7 +198,7 @@ public class ConsoleStartGame {
             int way = GamePlayController.readNbr(1, 5, "Add way: ", "\u001B[31mMust be from 1 to 5\u001B[0m");
             if (way == 5) {
                 new GuiStartGame().showPlayMission();
-                return -1;
+                return GUI;
             }
 
             int res = CharactherController.move(move[way - 1][0],move[way - 1][1]);

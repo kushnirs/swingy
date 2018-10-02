@@ -51,7 +51,7 @@ public class SelectHeroController {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         jFrame.dispose();
-                        new ConsoleStartGame().Game(2);
+                        new ConsoleStartGame().Game(ConsoleStartGame.CHANGE);
                     }
                 });
     }

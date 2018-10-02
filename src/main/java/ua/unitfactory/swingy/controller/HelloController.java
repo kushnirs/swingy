@@ -28,7 +28,7 @@ public class HelloController {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         jFrame.dispose();
-                        new ConsoleStartGame().Game(2);
+                        new ConsoleStartGame().Game(ConsoleStartGame.CHANGE);
                     }
                 },
                 // Exit Button

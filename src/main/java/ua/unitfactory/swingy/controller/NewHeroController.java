@@ -78,7 +78,7 @@ public class NewHeroController {
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         jFrame.dispose();
-                        new ConsoleStartGame().Game(4);
+                        new ConsoleStartGame().Game(ConsoleStartGame.CREATE);
                     }
         });
     }

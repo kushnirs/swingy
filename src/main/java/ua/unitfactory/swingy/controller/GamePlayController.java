@@ -22,7 +22,8 @@ public class GamePlayController {
         if (res == 1)
             winDialog(jFrame);
         else if (res == 2)
-            runOrFightDialog(jFrame, x, y);
+            if (runOrFightDialog(jFrame, x, y) == 2)
+                guiDrawMap(mapArena, arr);
 }
 
     public static void initMap() {
@@ -165,7 +166,7 @@ public class GamePlayController {
         }
     }
 
-    private static void runOrFightDialog(GuiStartGame jFrame, int x, int y) {
+    private static int runOrFightDialog(GuiStartGame jFrame, int x, int y) {
         Object[] options = {"RUN",
                 "FIGHT"};
         StringBuffer log = new StringBuffer("");
@@ -181,6 +182,7 @@ public class GamePlayController {
                     "This time you're lucky to run away",
                     "RUN", JOptionPane.INFORMATION_MESSAGE);
             CharactherController.move(-x, -y);
+            Main.map[Main.hero.getX() + x + (Main.hero.getY() + y) * Main.map_size] = 1;
         }
         else if (res == 1)
             new FightDialog(jFrame, log);
@@ -188,5 +190,6 @@ public class GamePlayController {
             new FightDialog(jFrame, log);
             deadDialog(jFrame);
         }
+        return res;
     }
 }
